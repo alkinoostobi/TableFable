@@ -4,6 +4,8 @@
     :style="{
       left: `${position.x}px`,
       top: `${position.y}px`,
+      width: `${size.x}px`,
+      height: `${size.y}px`,
     }"
     @mousedown="startDragging"
     @mousemove="drag"
@@ -15,13 +17,23 @@
     @selectstart="$event.preventDefault()"
   ></div>
 </template>
-    
-    <script>
-import { computed } from "vue";
+
+<script>
 import { usePositionStore } from "../stores/positionStore"; // Adjust the path as needed
+import { pxTranslate } from "../stores/px2feet";
+const positionStore = usePositionStore();
+const sizetranslate = pxTranslate();
 export default {
   props: {
     tokenIndex: {
+      type: Number,
+      required: true,
+    },
+    widthBoxes: {
+      type: Number,
+      required: true,
+    },
+    heightBoxes: {
       type: Number,
       required: true,
     },
@@ -30,12 +42,15 @@ export default {
     return {
       isDragging: false,
       startPosition: { x: 0, y: 0 },
+      size: {
+        x: 0,
+        y: 0,
+      },
     };
   },
   computed: {
     position() {
-      const positionStore = usePositionStore();
-      return positionStore.getPosition(this.tokenIndex);
+      return positionStore.getPosition(this.tokenIndex) || { x: 0, y: 0 };
     },
   },
   methods: {
@@ -51,9 +66,6 @@ export default {
       if (this.isDragging) {
         this.position.x = event.clientX - this.startPosition.x;
         this.position.y = event.clientY - this.startPosition.y;
-
-        // Save the updated position to the store
-        const positionStore = usePositionStore();
         positionStore.setPosition(this.tokenIndex, {
           x: this.position.x,
           y: this.position.y,
@@ -77,31 +89,28 @@ export default {
         const touch = event.touches[0];
         this.position.x = touch.clientX - this.startPosition.x;
         this.position.y = touch.clientY - this.startPosition.y;
-
-        // Save the updated position to the store
-        const positionStore = usePositionStore();
         positionStore.setPosition(this.tokenIndex, {
           x: this.position.x,
           y: this.position.y,
         });
       }
     },
-    created() {
-      // Set the initial position to (0, 0) when the component is created
-      const positionStore = usePositionStore();
-      positionStore.setPosition(this.tokenIndex, { x: 0, y: 0 });
-    },
+  },
+  created() {
+    positionStore.setPosition(this.tokenIndex, { x: 0, y: 0 });
+  },
+  mounted() {
+    this.size.x = sizetranslate.feetTranslator(5 * this.widthBoxes);
+    this.size.y = sizetranslate.feetTranslator(5 * this.heightBoxes);
+    console.log("23" + sizetranslate.feetTranslator(5 * this.heightBoxes));
   },
 };
 </script>
-    
-    <style scoped>
+
+<style scoped>
 .token-normal {
-  width: 50px;
-  height: 50px;
   background-color: blue;
   position: absolute;
   cursor: move;
 }
 </style>
-    
