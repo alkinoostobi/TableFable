@@ -26,7 +26,7 @@
       v-if="!sizenotChosen"
       :style="`background-size: ${gridFeetTranslator}px ${gridFeetTranslator}px;`"
     >
-      {{ testpos(3) }}
+      {{ initiativeOrder }}
       <q-page-container>
         <div v-for="(category, catInd) in getTokens" :key="'category' + catInd">
           <token-normal
@@ -59,9 +59,11 @@ import TokenNormal from "../components/TokenNormal.vue";
 import { usePositionStore } from "../stores/positionStore"; // Adjust the path as needed
 import { pxTranslate } from "../stores/px2feet";
 import { useTokenStore } from "../stores/tokenInfo";
+import { combatStore } from "../stores/combat";
 const sizetranslate = pxTranslate();
 const positionStore = usePositionStore();
 const tokenInfo = useTokenStore();
+const combat = combatStore();
 export default {
   components: {
     TokenNormal,
@@ -83,7 +85,13 @@ export default {
       return positionStore.getPosition(ind);
     },
   },
+  mounted() {
+    combat.rollForInitiative('Perception');
+  },
   computed: {
+    initiativeOrder() {
+      return combat.initiativeOrder
+    },
     getTokens() {
       return tokenInfo.getAllTokens;
     },
