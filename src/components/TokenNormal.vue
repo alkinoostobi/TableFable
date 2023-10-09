@@ -6,6 +6,7 @@
       top: `${position.y}px`,
       width: `${size.x}px`,
       height: `${size.y}px`,
+      'background-image': `url('${backgroundImageUrl}')`,
     }"
     @mousedown="startDragging"
     @mousemove="drag"
@@ -26,7 +27,7 @@ const sizetranslate = pxTranslate();
 export default {
   props: {
     tokenIndex: {
-      type: Number,
+      type: String,
       required: true,
     },
     widthBoxes: {
@@ -37,6 +38,10 @@ export default {
       type: Number,
       required: true,
     },
+    backgroundImageUrl: {
+      type: String,
+      required : true
+    }
   },
   data() {
     return {
@@ -109,8 +114,9 @@ export default {
 
 <style scoped>
 .token-normal {
-  background-color: blue;
   position: absolute;
   cursor: move;
+  background-size: cover; 
+  background-repeat: no-repeat;
 }
 </style>

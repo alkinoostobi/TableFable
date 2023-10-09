@@ -28,31 +28,16 @@
     >
       {{ testpos(3) }}
       <q-page-container>
-        <token-normal
-          :token-index="0"
-          :width-boxes="1"
-          :height-boxes="1"
-        ></token-normal>
-        <token-normal
-          :token-index="1"
-          :width-boxes="1"
-          :height-boxes="1"
-        ></token-normal>
-        <token-normal
-          :token-index="2"
-          :width-boxes="1"
-          :height-boxes="1"
-        ></token-normal>
-        <token-normal
-          :token-index="3"
-          :width-boxes="1"
-          :height-boxes="1"
-        ></token-normal>
-        <token-normal
-          :token-index="7"
-          :width-boxes="1"
-          :height-boxes="1"
-        ></token-normal>
+        <div v-for="(category, catInd) in getTokens" :key="'category' + catInd">
+          <token-normal
+            v-for="(token, tokenInd) in category"
+            :key="'token' + tokenInd"
+            :token-index="token.id"
+            :width-boxes="token.size.x"
+            :height-boxes="token.size.y"
+            :backgroundImageUrl="token.icon"
+          ></token-normal>
+        </div>
       </q-page-container>
     </div>
   </q-layout>
@@ -63,8 +48,10 @@ import { tokenPositions } from "../shared/tokenPositions"; // Adjust the import 
 import TokenNormal from "../components/TokenNormal.vue";
 import { usePositionStore } from "../stores/positionStore"; // Adjust the path as needed
 import { pxTranslate } from "../stores/px2feet";
+import { useTokenStore } from "../stores/tokenInfo";
 const sizetranslate = pxTranslate();
 const positionStore = usePositionStore();
+const tokenInfo = useTokenStore();
 export default {
   components: {
     TokenNormal,
@@ -90,6 +77,9 @@ export default {
     },
   },
   computed: {
+    getTokens() {
+      return tokenInfo.getAllTokens();
+    },
     tokenPositions() {
       return tokenPositions.value;
     },
