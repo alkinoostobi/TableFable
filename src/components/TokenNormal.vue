@@ -8,13 +8,13 @@
       height: `${size.y}px`,
       'background-image': `url('${backgroundImageUrl}')`,
     }"
-    @mousedown="startDragging"
-    @mousemove="drag"
-    @mouseup="stopDragging"
-    @touchstart="startTouchDragging"
-    @touchmove="touchDrag"
-    @touchend="stopDragging"
-    @touchcancel="stopDragging"
+   @mousedown="playing ? startDragging($event) : null"
+    @mousemove="playing ? drag($event) : null"
+    @mouseup="playing ? stopDragging($event) : null"
+    @touchstart="playing ? startTouchDragging($event) : null"
+    @touchmove="playing ? touchDrag($event) : null"
+    @touchend="playing ? stopDragging($event) : null"
+    @touchcancel="playing ? stopDragging($event) : null"
     @selectstart="$event.preventDefault()"
   ></div>
 </template>
@@ -41,6 +41,10 @@ export default {
     backgroundImageUrl: {
       type: String,
       required : true
+    },
+    playing: {
+      type: Boolean,
+      required: true
     }
   },
   data() {

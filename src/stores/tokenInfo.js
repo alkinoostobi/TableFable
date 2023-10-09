@@ -94,8 +94,10 @@ export const useTokenStore = defineStore("token", {
         getToken(tokenId, tokenCat) {
             return this.tokens[tokenCat][tokenId];
         },
+    },
+    getters: {
         getAllTokens() {
             return this.tokens;
         },
-    },
+    }
 });

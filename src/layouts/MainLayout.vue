@@ -36,9 +36,19 @@
             :width-boxes="token.size.x"
             :height-boxes="token.size.y"
             :backgroundImageUrl="token.icon"
+            :playing='true'
           ></token-normal>
         </div>
       </q-page-container>
+      <div class="circular-button">
+      <q-btn
+        round
+        color="primary"
+        size="lg"
+        icon="auto_fix_high"
+        @click="''"
+      />
+    </div>
     </div>
   </q-layout>
 </template>
@@ -62,9 +72,6 @@ export default {
       gridSize: 0,
     };
   },
-  unmounted() {
-    console.log("Bottom behaviour");
-  },
   methods: {
     SaveSize() {
       sizetranslate.setpxPerFoot(this.gridSize);
@@ -78,7 +85,7 @@ export default {
   },
   computed: {
     getTokens() {
-      return tokenInfo.getAllTokens();
+      return tokenInfo.getAllTokens;
     },
     tokenPositions() {
       return tokenPositions.value;
