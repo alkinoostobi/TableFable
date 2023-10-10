@@ -35,7 +35,7 @@ export const combatStore = defineStore("combat", {
             tokensWithInitiative.sort((a, b) => b.initiative - a.initiative);
 
             // Store the initiative order as an array of token IDs
-            this.initiativeOrder = tokensWithInitiative.map(token => token.id);
+            this.initiativeOrder = tokensWithInitiative.map(token => [token.id, token.type]);
         },
         pauseCombat() {
             this.combatPause = !this.combatPause
@@ -44,10 +44,15 @@ export const combatStore = defineStore("combat", {
         turnOver() {
             // Increment initiativeIndex unless it reaches the end, then reset to 0
             this.initiativeIndex = this.initiativeIndex < this.initiativeOrder.length - 1 ? this.initiativeIndex + 1 : 0;
-
-            // Reset the number of available actions to 3 (or any desired value)
             this.numberOfActions = 3;
-        }
+            //                  tokenInfo.tokens[tokenType][tokenId].speed
+            this.movementLeft = tokenInfo.tokens[this.initiativeOrder[this.initiativeIndex][1]][this.initiativeOrder[this.initiativeIndex][0]].speed;
+        },
+        move() {},
+        attack() {},
+        spell() {},
+        ability() {},
+
     },
     getters: {
         // Getter to determine whose turn it is based on initiativeIndex
