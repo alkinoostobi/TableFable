@@ -8,7 +8,7 @@
       height: `${size.y}px`,
       'background-image': `url('${backgroundImageUrl}')`,
     }"
-   @mousedown="playing ? startDragging($event) : null"
+    @mousedown="playing ? startDragging($event) : null"
     @mousemove="playing ? drag($event) : null"
     @mouseup="playing ? stopDragging($event) : null"
     @touchstart="playing ? startTouchDragging($event) : null"
@@ -40,12 +40,12 @@ export default {
     },
     backgroundImageUrl: {
       type: String,
-      required : true
+      required: true,
     },
     playing: {
       type: Boolean,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -120,7 +120,7 @@ export default {
 .token-normal {
   position: absolute;
   cursor: move;
-  background-size: cover; 
+  background-size: cover;
   background-repeat: no-repeat;
 }
 </style>

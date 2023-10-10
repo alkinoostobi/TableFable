@@ -11,5 +11,8 @@ export const pxTranslate = defineStore("translate", {
     setpxPerFoot(pxPer5feet) {
       this.pxPerFoot = pxPer5feet / 5
     },
+    pxtoFeet(px) {
+      return px / this.pxPerFoot
+    }
   },
 });
