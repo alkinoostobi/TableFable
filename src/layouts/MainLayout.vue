@@ -36,7 +36,7 @@
             :width-boxes="token.size.x"
             :height-boxes="token.size.y"
             :backgroundImageUrl="token.icon"
-            :playing='true'
+            :playing='(!(combat.combatBool) || (combat.initiativeOrder[combat.initiativeIndex] == token.id) || combatPause)'
           ></token-normal>
         </div>
       </q-page-container>
@@ -46,10 +46,11 @@
         color="primary"
         size="lg"
         icon="auto_fix_high"
-        @click="''"
+        @click="showOverlay = !showOverlay"
       />
     </div>
     </div>
+    
   </q-layout>
 </template>
 
@@ -72,6 +73,8 @@ export default {
     return {
       sizenotChosen: true,
       gridSize: 0,
+      showOverlay: false,
+      combat: combat,
     };
   },
   methods: {
@@ -117,5 +120,15 @@ export default {
   align-items: center;
   background-image: linear-gradient(to right, grey 1px, transparent 1px),
     linear-gradient(to bottom, grey 1px, transparent 1px);
+}
+.overlay {
+  background: rgba(0, 0, 0, 0.5); /* Adjust the opacity as needed */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999; /* Adjust the z-index as needed */
+  pointer-events: auto; /* Allows interaction with the overlay */
 }
 </style>

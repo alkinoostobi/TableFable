@@ -13,6 +13,7 @@ export const useTokenStore = defineStore("token", {
                         'y': 1
                     },
                     'position': {},
+                    'speed': 30,
                     'name': 'Dowr',
                     'class': 'Sorcerer',
                     'race': {
@@ -70,6 +71,7 @@ export const useTokenStore = defineStore("token", {
                         'y': 1
                     },
                     'position': {},
+                    'speed': 30,
                     'name': 'Dowr',
                     'class': 'Sorcerer',
                     'race': {
@@ -127,6 +129,7 @@ export const useTokenStore = defineStore("token", {
                         'y': 1
                     },
                     'position': {},
+                    'speed': 30,
                     'name': 'Dowr',
                     'class': 'Sorcerer',
                     'race': {
@@ -182,6 +185,7 @@ export const useTokenStore = defineStore("token", {
                     'type': 1,
                     'icon': 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/32b5ea72-1008-455c-a164-8604ac88bb47/df5yi6k-fb5e6344-0619-4c93-99e4-90c0371cb961.png/v1/fill/w_330,h_330/awakened_shrub_token_by_caeora_df5yi6k-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MzMwIiwicGF0aCI6IlwvZlwvMzJiNWVhNzItMTAwOC00NTVjLWExNjQtODYwNGFjODhiYjQ3XC9kZjV5aTZrLWZiNWU2MzQ0LTA2MTktNGM5My05OWU0LTkwYzAzNzFjYjk2MS5wbmciLCJ3aWR0aCI6Ijw9MzMwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.EeZ_UNU9buhmneBk9TVc_5VOeg5aMc0c8j6hZWTKx10',
                     'position': {},
+                    'speed': 30,
                     'size': {
                         'x': 5,
                         'y': 5
@@ -205,6 +209,7 @@ export const useTokenStore = defineStore("token", {
                     'type': 1,
                     'icon': 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/32b5ea72-1008-455c-a164-8604ac88bb47/df5yi6k-fb5e6344-0619-4c93-99e4-90c0371cb961.png/v1/fill/w_330,h_330/awakened_shrub_token_by_caeora_df5yi6k-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MzMwIiwicGF0aCI6IlwvZlwvMzJiNWVhNzItMTAwOC00NTVjLWExNjQtODYwNGFjODhiYjQ3XC9kZjV5aTZrLWZiNWU2MzQ0LTA2MTktNGM5My05OWU0LTkwYzAzNzFjYjk2MS5wbmciLCJ3aWR0aCI6Ijw9MzMwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.EeZ_UNU9buhmneBk9TVc_5VOeg5aMc0c8j6hZWTKx10',
                     'position': {},
+                    'speed': 30,
                     'size': {
                         'x': 5,
                         'y': 5
@@ -228,6 +233,7 @@ export const useTokenStore = defineStore("token", {
                     'type': 1,
                     'icon': 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/32b5ea72-1008-455c-a164-8604ac88bb47/df5yi6k-fb5e6344-0619-4c93-99e4-90c0371cb961.png/v1/fill/w_330,h_330/awakened_shrub_token_by_caeora_df5yi6k-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MzMwIiwicGF0aCI6IlwvZlwvMzJiNWVhNzItMTAwOC00NTVjLWExNjQtODYwNGFjODhiYjQ3XC9kZjV5aTZrLWZiNWU2MzQ0LTA2MTktNGM5My05OWU0LTkwYzAzNzFjYjk2MS5wbmciLCJ3aWR0aCI6Ijw9MzMwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.EeZ_UNU9buhmneBk9TVc_5VOeg5aMc0c8j6hZWTKx10',
                     'position': {},
+                    'speed': 30,
                     'size': {
                         'x': 5,
                         'y': 5
@@ -251,6 +257,7 @@ export const useTokenStore = defineStore("token", {
                     'type': 1,
                     'icon': 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/32b5ea72-1008-455c-a164-8604ac88bb47/df5yi6k-fb5e6344-0619-4c93-99e4-90c0371cb961.png/v1/fill/w_330,h_330/awakened_shrub_token_by_caeora_df5yi6k-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MzMwIiwicGF0aCI6IlwvZlwvMzJiNWVhNzItMTAwOC00NTVjLWExNjQtODYwNGFjODhiYjQ3XC9kZjV5aTZrLWZiNWU2MzQ0LTA2MTktNGM5My05OWU0LTkwYzAzNzFjYjk2MS5wbmciLCJ3aWR0aCI6Ijw9MzMwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.EeZ_UNU9buhmneBk9TVc_5VOeg5aMc0c8j6hZWTKx10',
                     'position': {},
+                    'speed': 30,
                     'size': {
                         'x': 5,
                         'y': 5
