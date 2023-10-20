@@ -13,6 +13,7 @@ export const useTokenStore = defineStore("token", {
                         'y': 1
                     },
                     'position': {},
+                    'rotation': '0deg',
                     'speed': 30,
                     'name': 'Dowr',
                     'class': 'Sorcerer',
@@ -65,12 +66,13 @@ export const useTokenStore = defineStore("token", {
                 'pl2': {
                     'id': 'pl2',
                     'type': 0,
-                    'icon': 'https://s3.amazonaws.com/files.d20.io/marketplace/2349674/yebtKpMWfVOqzU379C-KQw/med.png?1648743198602',
+                    'icon': 'https://travisaw.com/wp-content/uploads/2021/08/token-generator-normal.png',
                     'size': {
                         'x': 1,
                         'y': 1
                     },
                     'position': {},
+                    'rotation': '0deg',
                     'speed': 30,
                     'name': 'Dowr',
                     'class': 'Sorcerer',
@@ -123,12 +125,13 @@ export const useTokenStore = defineStore("token", {
                 'pl3': {
                     'id': 'pl3',
                     'type': 0,
-                    'icon': 'https://s3.amazonaws.com/files.d20.io/marketplace/2349674/yebtKpMWfVOqzU379C-KQw/med.png?1648743198602',
+                    'icon': 'https://i.pinimg.com/originals/ef/94/95/ef94956ffd550b1fce2ac4bd0f0c72df.png',
                     'size': {
                         'x': 1,
                         'y': 1
                     },
                     'position': {},
+                    'rotation': '0deg',
                     'speed': 30,
                     'name': 'Dowr',
                     'class': 'Sorcerer',
@@ -183,8 +186,9 @@ export const useTokenStore = defineStore("token", {
                 'mon1': {
                     'id': 'mon1',
                     'type': 1,
-                    'icon': 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/32b5ea72-1008-455c-a164-8604ac88bb47/df5yi6k-fb5e6344-0619-4c93-99e4-90c0371cb961.png/v1/fill/w_330,h_330/awakened_shrub_token_by_caeora_df5yi6k-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MzMwIiwicGF0aCI6IlwvZlwvMzJiNWVhNzItMTAwOC00NTVjLWExNjQtODYwNGFjODhiYjQ3XC9kZjV5aTZrLWZiNWU2MzQ0LTA2MTktNGM5My05OWU0LTkwYzAzNzFjYjk2MS5wbmciLCJ3aWR0aCI6Ijw9MzMwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.EeZ_UNU9buhmneBk9TVc_5VOeg5aMc0c8j6hZWTKx10',
+                    'icon': 'https://i.pinimg.com/originals/ff/9c/48/ff9c4808809368fbd58106140977708b.png',
                     'position': {},
+                    'rotation': '45',
                     'speed': 30,
                     'size': {
                         'x': 5,
@@ -207,12 +211,13 @@ export const useTokenStore = defineStore("token", {
                 'mon2': {
                     'id': 'mon2',
                     'type': 1,
-                    'icon': 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/32b5ea72-1008-455c-a164-8604ac88bb47/df5yi6k-fb5e6344-0619-4c93-99e4-90c0371cb961.png/v1/fill/w_330,h_330/awakened_shrub_token_by_caeora_df5yi6k-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MzMwIiwicGF0aCI6IlwvZlwvMzJiNWVhNzItMTAwOC00NTVjLWExNjQtODYwNGFjODhiYjQ3XC9kZjV5aTZrLWZiNWU2MzQ0LTA2MTktNGM5My05OWU0LTkwYzAzNzFjYjk2MS5wbmciLCJ3aWR0aCI6Ijw9MzMwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.EeZ_UNU9buhmneBk9TVc_5VOeg5aMc0c8j6hZWTKx10',
+                    'icon': 'https://s3.amazonaws.com/files.d20.io/marketplace/2222383/DSzCtKYufMLb9EinYYX2ug/med.png?1642080635715',
                     'position': {},
+                    'rotation': '90deg',
                     'speed': 30,
                     'size': {
-                        'x': 5,
-                        'y': 5
+                        'x': 3,
+                        'y': 3
                     },
                     'name': 'Large Plant',
                     'level': 3,
@@ -231,12 +236,13 @@ export const useTokenStore = defineStore("token", {
                 'mon3': {
                     'id': 'mon3',
                     'type': 1,
-                    'icon': 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/32b5ea72-1008-455c-a164-8604ac88bb47/df5yi6k-fb5e6344-0619-4c93-99e4-90c0371cb961.png/v1/fill/w_330,h_330/awakened_shrub_token_by_caeora_df5yi6k-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MzMwIiwicGF0aCI6IlwvZlwvMzJiNWVhNzItMTAwOC00NTVjLWExNjQtODYwNGFjODhiYjQ3XC9kZjV5aTZrLWZiNWU2MzQ0LTA2MTktNGM5My05OWU0LTkwYzAzNzFjYjk2MS5wbmciLCJ3aWR0aCI6Ijw9MzMwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.EeZ_UNU9buhmneBk9TVc_5VOeg5aMc0c8j6hZWTKx10',
+                    'icon': 'https://i.imgur.com/amMQC3f.png',
                     'position': {},
+                    'rotation': '0deg',
                     'speed': 30,
                     'size': {
-                        'x': 5,
-                        'y': 5
+                        'x': 2,
+                        'y': 2
                     },
                     'name': 'Large Plant',
                     'level': 3,
@@ -255,12 +261,13 @@ export const useTokenStore = defineStore("token", {
                 'mon4': {
                     'id': 'mon4',
                     'type': 1,
-                    'icon': 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/32b5ea72-1008-455c-a164-8604ac88bb47/df5yi6k-fb5e6344-0619-4c93-99e4-90c0371cb961.png/v1/fill/w_330,h_330/awakened_shrub_token_by_caeora_df5yi6k-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MzMwIiwicGF0aCI6IlwvZlwvMzJiNWVhNzItMTAwOC00NTVjLWExNjQtODYwNGFjODhiYjQ3XC9kZjV5aTZrLWZiNWU2MzQ0LTA2MTktNGM5My05OWU0LTkwYzAzNzFjYjk2MS5wbmciLCJ3aWR0aCI6Ijw9MzMwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.EeZ_UNU9buhmneBk9TVc_5VOeg5aMc0c8j6hZWTKx10',
+                    'icon': 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/04236ba8-38d0-4177-a92e-e9ece2becc59/de4sdvg-40333da7-424b-4d34-9ad8-a873cebb656c.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzA0MjM2YmE4LTM4ZDAtNDE3Ny1hOTJlLWU5ZWNlMmJlY2M1OVwvZGU0c2R2Zy00MDMzM2RhNy00MjRiLTRkMzQtOWFkOC1hODczY2ViYjY1NmMucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.3lbgVF1ID0VcRaf3ruQrbX0gB9LiIDjyW9vz6HZK7lM',
                     'position': {},
+                    'rotation': '30deg',
                     'speed': 30,
                     'size': {
-                        'x': 5,
-                        'y': 5
+                        'x': 2,
+                        'y': 2
                     },
                     'name': 'Large Plant',
                     'level': 3,

@@ -21,36 +21,54 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
-    <div
-      class="grid-background"
-      v-if="!sizenotChosen"
-      :style="`background-size: ${gridFeetTranslator}px ${gridFeetTranslator}px;`"
-    >
-      {{ initiativeOrder }}
-      <q-page-container>
-        <div v-for="(category, catInd) in getTokens" :key="'category' + catInd">
-          <token-normal
-            v-for="(token, tokenInd) in category"
-            :key="'token' + tokenInd"
-            :token-index="token.id"
-            :width-boxes="token.size.x"
-            :height-boxes="token.size.y"
-            :backgroundImageUrl="token.icon"
-            :playing='(!(combat.combatBool) || (combat.initiativeOrder[combat.initiativeIndex] == token.id) || combatPause)'
-          ></token-normal>
-        </div>
-      </q-page-container>
-      <div class="circular-button">
-      <q-btn
-        round
-        color="primary"
-        size="lg"
-        icon="auto_fix_high"
-        @click="showOverlay = !showOverlay"
-      />
+    <div class="background-container">
+      <div
+        class="grid-background"
+        v-if="!sizenotChosen"
+        :style="`background-size: ${gridFeetTranslator}px ${gridFeetTranslator}px;background-image: linear-gradient(to right, ${dmTools.getGridColor} 1px, transparent 1px),
+    linear-gradient(to bottom, ${dmTools.getGridColor} 1px, transparent 1px);`"
+      >
+        <q-page-container>
+          <div
+            v-for="(category, catInd) in getTokens"
+            :key="'category' + catInd"
+          >
+            <token-normal
+              v-for="(token, tokenInd) in category"
+              :key="'token' + tokenInd"
+              :token-index="token.id"
+              :width-boxes="token.size.x"
+              :height-boxes="token.size.y"
+              :backgroundImageUrl="token.icon"
+              :playing="
+                !combat.combatBool ||
+                combat.initiativeOrder[combat.initiativeIndex] == token.id ||
+                combatPause
+              "
+              :style="` 
+               -webkit-transform: rotate(${token.rotation});
+               -moz-transform: rotate(${token.rotation});
+               -ms-transform: rotate(${token.rotation});
+               -o-transform: rotate(${token.rotation}); 
+               transform: rotate(${token.rotation}); `"
+            ></token-normal>
+          </div>
+        </q-page-container>
+        <!--div class="circular-button">
+          <q-btn
+            round
+            color="primary"
+            size="lg"
+            icon="auto_fix_high"
+            @click="showOverlay = !showOverlay"
+          />
+        </div-->
+      </div>
+      <div
+        class="background-image"
+        :style="`background: url(${dmTools.getGridBackground}) no-repeat center;`"
+      ></div>
     </div>
-    </div>
-    
   </q-layout>
 </template>
 
@@ -61,10 +79,12 @@ import { usePositionStore } from "../stores/positionStore"; // Adjust the path a
 import { pxTranslate } from "../stores/px2feet";
 import { useTokenStore } from "../stores/tokenInfo";
 import { combatStore } from "../stores/combat";
+import { dmtools } from "../stores/dmtools"; // Adjust the path as needed
 const sizetranslate = pxTranslate();
 const positionStore = usePositionStore();
 const tokenInfo = useTokenStore();
 const combat = combatStore();
+const condmtools = dmtools();
 export default {
   components: {
     TokenNormal,
@@ -75,6 +95,7 @@ export default {
       gridSize: 0,
       showOverlay: false,
       combat: combat,
+      dmTools: condmtools,
     };
   },
   methods: {
@@ -89,11 +110,11 @@ export default {
     },
   },
   mounted() {
-    combat.rollForInitiative('Perception');
+    combat.rollForInitiative("Perception");
   },
   computed: {
     initiativeOrder() {
-      return combat.initiativeOrder
+      return combat.initiativeOrder;
     },
     getTokens() {
       return tokenInfo.getAllTokens;
@@ -118,8 +139,6 @@ export default {
   height: 100vh;
   flex-direction: column;
   align-items: center;
-  background-image: linear-gradient(to right, grey 1px, transparent 1px),
-    linear-gradient(to bottom, grey 1px, transparent 1px);
 }
 .overlay {
   background: rgba(0, 0, 0, 0.5); /* Adjust the opacity as needed */
@@ -130,5 +149,20 @@ export default {
   height: 100%;
   z-index: 9999; /* Adjust the z-index as needed */
   pointer-events: auto; /* Allows interaction with the overlay */
+}
+.background-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover !important;
+  z-index: -1;
 }
 </style>
