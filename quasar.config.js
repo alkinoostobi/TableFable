@@ -78,7 +78,18 @@ module.exports = configure(function( /* ctx */ ) {
 
             // extendViteConf (viteConf) {},
             // viteVuePluginOptions: {},
-
+            chainWebpack(chain) {
+                chain.module
+                    .rule('fonts')
+                    .test(/\.(woff2?|eot|ttf|otf)(\?.*)?$/i)
+                    .use('url-loader')
+                    .loader('url-loader')
+                    .tap(options => {
+                        options.limit = 8192;
+                        options.fallback.options.name = 'fonts/[name].[ext]';
+                        return options;
+                    });
+            },
 
             // vitePlugins: [
             //   [ 'package-name', { ..options.. } ]

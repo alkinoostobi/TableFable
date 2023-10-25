@@ -1,5 +1,6 @@
 <template>
   <q-layout view="hHh lpR fFf">
+    <character-turn></character-turn>
     <q-dialog v-model="sizenotChosen" persistent>
       <q-card style="min-width: 350px">
         <q-card-section>
@@ -73,13 +74,17 @@
 </template>
 
 <script>
-import { tokenPositions } from "../shared/tokenPositions"; // Adjust the import path
 import TokenNormal from "../components/TokenNormal.vue";
+import CharacterTurn from "../overlays/CharacterTurn.vue"
+
+import { tokenPositions } from "../shared/tokenPositions"; // Adjust the import path
 import { usePositionStore } from "../stores/positionStore"; // Adjust the path as needed
 import { pxTranslate } from "../stores/px2feet";
 import { useTokenStore } from "../stores/tokenInfo";
 import { combatStore } from "../stores/combat";
 import { dmtools } from "../stores/dmtools"; // Adjust the path as needed
+
+
 const sizetranslate = pxTranslate();
 const positionStore = usePositionStore();
 const tokenInfo = useTokenStore();
@@ -88,6 +93,7 @@ const condmtools = dmtools();
 export default {
   components: {
     TokenNormal,
+    CharacterTurn,
   },
   data() {
     return {
