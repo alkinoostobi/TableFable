@@ -16,7 +16,7 @@
     @touchend="playing ? stopDragging($event) : null"
     @touchcancel="playing ? stopDragging($event) : null"
     @selectstart="$event.preventDefault()"
-  ></div>
+  ><span style="color:white">{{ tokenid }}</span></div>
 </template>
 
 <script>
@@ -45,6 +45,10 @@ export default {
     playing: {
       type: Boolean,
       required: true,
+    },
+    tokenid: {
+      type: String,
+      required: false,
     },
   },
   data() {

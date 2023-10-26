@@ -1,6 +1,10 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    <character-turn></character-turn>
+    
+    
+    <character-turn v-if="combat.overlay"></character-turn>
+    
+
     <q-dialog v-model="sizenotChosen" persistent>
       <q-card style="min-width: 350px">
         <q-card-section>
@@ -23,12 +27,15 @@
       </q-card>
     </q-dialog>
     <div class="background-container">
+      
       <div
         class="grid-background"
         v-if="!sizenotChosen"
         :style="`background-size: ${gridFeetTranslator}px ${gridFeetTranslator}px;background-image: linear-gradient(to right, ${dmTools.getGridColor} 1px, transparent 1px),
     linear-gradient(to bottom, ${dmTools.getGridColor} 1px, transparent 1px);`"
       >
+      <span class="pixel-border pixelborder remainingFt" v-if="combat.action == 'moving'" >{{ combat.getMovementLeft }}ft remaining</span>
+      <draggable-button v-if="combat.getAction == 'moving'"></draggable-button>
         <q-page-container>
           <div
             v-for="(category, catInd) in getTokens"
@@ -42,10 +49,11 @@
               :height-boxes="token.size.y"
               :backgroundImageUrl="token.icon"
               :playing="
-                !combat.combatBool ||
-                combat.initiativeOrder[combat.initiativeIndex] == token.id ||
-                combatPause
+                !combat.getcombatBool ||
+                combat.initiativeOrder[combat.initiativeIndex][0] == token.id ||
+                combat.combatPause
               "
+              :tokenid="token.id"
               :style="` 
                -webkit-transform: rotate(${token.rotation});
                -moz-transform: rotate(${token.rotation});
@@ -55,15 +63,15 @@
             ></token-normal>
           </div>
         </q-page-container>
-        <!--div class="circular-button">
+        <div class="circular-button">
           <q-btn
             round
             color="primary"
             size="lg"
             icon="auto_fix_high"
-            @click="showOverlay = !showOverlay"
+            @click="combat.combatStart('Perception')"
           />
-        </div-->
+        </div>
       </div>
       <div
         class="background-image"
@@ -75,6 +83,7 @@
 
 <script>
 import TokenNormal from "../components/TokenNormal.vue";
+import DraggableButton from "../components/DraggableButton.vue";
 import CharacterTurn from "../overlays/CharacterTurn.vue"
 
 import { tokenPositions } from "../shared/tokenPositions"; // Adjust the import path
@@ -94,6 +103,7 @@ export default {
   components: {
     TokenNormal,
     CharacterTurn,
+    DraggableButton
   },
   data() {
     return {
@@ -116,7 +126,6 @@ export default {
     },
   },
   mounted() {
-    combat.rollForInitiative("Perception");
   },
   computed: {
     initiativeOrder() {
@@ -170,5 +179,13 @@ export default {
   height: 100%;
   background-size: cover !important;
   z-index: -1;
+}
+.remainingFt{
+  color: black; 
+  font-size: 2rem;
+  opacity: 0.7;
+  padding: 0 1rem;
+  position:absolute;
+  z-index: 99999;
 }
 </style>

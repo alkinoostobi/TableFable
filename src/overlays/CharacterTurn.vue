@@ -1,36 +1,39 @@
 <template>
-    <div class="overlay">
-      <div class="actions">
-        <div class="action-label">
-          ACTION 1
-        </div>
+    <div class="overlay" @click="handleTap($event)">
+      <div class="action-label pixel-border pixelborder">ACTION 1</div>
+      <div
+        class="actions"
+        :style="{
+          transform: `rotate(${rotation}deg) translate(${positions[0]}%, ${positions[1]}%)`,
+        }"
+      >
         <div class="action top-left pixel-border pixelborder">
           <div class="image-container">
-            <img src="../assets/attack.png" alt="Attack icon">
+            <img src="../assets/attack.png" alt="Attack icon" />
           </div>
           <span class="action-text">Attack</span>
         </div>
         <div class="action top-right pixel-border pixelborder">
           <div class="image-container">
-            <img src="../assets/spell.png" alt="Spell icon">
+            <img src="../assets/spell.png" alt="Spell icon" />
           </div>
           <span class="action-text">Spell</span>
         </div>
-        <div class="action center pixel-border pixelborder">
+        <div class="action right pixel-border pixelborder">
           <div class="image-container">
-            <img src="../assets/skip.png" alt="Skip action icon">
+            <img src="../assets/skip.png" alt="Skip action icon" />
           </div>
           <span class="action-text">Skip Action</span>
         </div>
-        <div class="action left pixel-border pixelborder">
+        <div class="action left pixel-border pixelborder" @click="combat.moveStart()">
           <div class="image-container">
-            <img src="../assets/move.png" alt="Action icon">
+            <img src="../assets/move.png" alt="Action icon" />
           </div>
           <span class="action-text">Move Action</span>
         </div>
-        <div class="action right pixel-border pixelborder">
+        <div class="action center pixel-border pixelborder">
           <div class="image-container">
-            <img src="../assets/classaction.png" alt="Class action icon">
+            <img src="../assets/classaction.png" alt="Class action icon" />
           </div>
           <span class="action-text">Class Action</span>
         </div>
@@ -39,21 +42,51 @@
   </template>
   
   <script>
+  import { combatStore } from "../stores/combat";
+  const combat = combatStore();
   export default {
-    name: 'CharacterTurn'
+    name: "CharacterTurn",
+    data() {
+      return {
+        rotation: 0,
+        rotations: [0, 90, 180, 270],
+        currentRotationIndex: 0,
+            positions: [0, 0],
+            combat: combat,
+      };
+    },
+    methods: {
+      handleTap(event) {
+        const tapX = event.clientX;
+        const tapY = event.clientY;
+  
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+  
+        if (tapY < 50) {
+          this.rotation = this.rotations[2];
+          this.currentRotationIndex = 2;
+          this.positions = [0, 200];
+        } else if (tapY > screenHeight - 50) {
+          this.rotation = this.rotations[0];
+          this.currentRotationIndex = 0;
+          this.positions = [0, 200];
+        } else if (tapX < 50) {
+          this.rotation = this.rotations[1];
+          this.currentRotationIndex = 1;
+          this.positions = [0, 500];
+        } else if (tapX > screenWidth - 50) {
+          this.rotation = this.rotations[3];
+          this.currentRotationIndex = 3;
+          this.positions = [0, 500];
+        }
+      },
+    },
   };
   </script>
   
   <style scoped>
-  /* Add the provided pixel-border CSS here */
-  .pixel-border {
-    --pixel-bg: lightblue;
-    --pixel-border: black;
-    --pixel-border-2: white;
-    --pixel-border-3: var(--pixel-border);
-    --pixel: 0.125rem;
-    background: var(--pixel-bg);
-  }
+
   
   .overlay {
     background: rgba(0, 0, 0, 0.5);
@@ -61,6 +94,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+    flex-direction: column; 
   }
   
   .actions {
@@ -71,16 +105,17 @@
   
   .action {
     margin: 10px;
-    padding: 0 20px; /* Add padding here */
+    padding: 0 20px; 
     display: flex;
     flex-direction: column;
     align-items: center;
   }
   
   .action-label {
-    color: white;
+    color: black;
     font-size: 1.5em;
     margin-bottom: 20px;
+    padding : 0 1rem;
   }
   
   .image-container {
@@ -102,23 +137,23 @@
   }
   
   .top-left {
-    order: 1;
+    order: 2; /* Adjust the order to place it below Action 1 */
   }
   
   .top-right {
-    order: 2;
-  }
-  
-  .center {
     order: 3;
   }
   
-  .left {
+  .center {
     order: 4;
   }
   
-  .right {
+  .left {
     order: 5;
+  }
+  
+  .right {
+    order: 6;
   }
   </style>
   
