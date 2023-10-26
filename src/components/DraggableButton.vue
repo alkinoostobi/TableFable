@@ -5,19 +5,23 @@
         left: `${position.x}px`,
         top: `${position.y}px`
       }"
+      @touchstart="startDrag"
+      @touchend="stopDrag"
     >
       <div
         class="handle"
         @mousedown="startDrag"
+        @touchstart="startDrag"
         @mouseup="stopDrag"
+        @touchend="stopDrag"
       >
         <q-icon name="drag_handle" class="handle-icon" />
       </div>
       <div class="buttons-container">
-        <button @click="handlePauseClick" class="action-button">
+        <button @click="handlePauseClick" @touchstart="handlePauseClick" class="action-button">
           <q-icon name="pause" /> Pause Movement
         </button>
-        <button @click="handleEndClick" class="action-button">
+        <button @click="handleEndClick" @touchstart="handleEndClick" class="action-button">
           <q-icon name="stop" /> End Movement
         </button>
       </div>
@@ -44,23 +48,41 @@
     },
     methods: {
       startDrag(e) {
+        e.preventDefault();
+        if (e.type === 'touchstart') {
+          this.startX = e.touches[0].clientX;
+          this.startY = e.touches[0].clientY;
+        } else {
+          this.startX = e.clientX;
+          this.startY = e.clientY;
+        }
         this.isDragging = true;
-        this.startX = e.clientX;
-        this.startY = e.clientY;
         this.initialX = this.position.x;
         this.initialY = this.position.y;
         document.addEventListener('mousemove', this.move);
+        document.addEventListener('touchmove', this.move, { passive: false });
         document.addEventListener('mouseup', this.stopDrag);
+        document.addEventListener('touchend', this.stopDrag);
       },
       stopDrag() {
         this.isDragging = false;
         document.removeEventListener('mousemove', this.move);
+        document.removeEventListener('touchmove', this.move);
         document.removeEventListener('mouseup', this.stopDrag);
+        document.removeEventListener('touchend', this.stopDrag);
       },
       move(e) {
         if (!this.isDragging) return;
-        const dx = e.clientX - this.startX;
-        const dy = e.clientY - this.startY;
+        let clientX, clientY;
+        if (e.type === 'touchmove') {
+          clientX = e.touches[0].clientX;
+          clientY = e.touches[0].clientY;
+        } else {
+          clientX = e.clientX;
+          clientY = e.clientY;
+        }
+        const dx = clientX - this.startX;
+        const dy = clientY - this.startY;
         this.position.x = this.initialX + dx;
         this.position.y = this.initialY + dy;
       },
