@@ -10,19 +10,25 @@
         class="handle"
         @mousedown="startDrag"
         @mouseup="stopDrag"
-      ></div>
-      <button
-        style="margin-top: 40px;"
-        @click="handleButtonClick"
       >
-        Pause Movement
-      </button>
+        <q-icon name="drag_handle" class="handle-icon" />
+      </div>
+      <div class="buttons-container">
+        <button @click="handlePauseClick" class="action-button">
+          <q-icon name="pause" /> Pause Movement
+        </button>
+        <button @click="handleEndClick" class="action-button">
+          <q-icon name="stop" /> End Movement
+        </button>
+      </div>
     </div>
   </template>
   
   <script>
-    import { combatStore } from "../stores/combat";
+  import { ref } from 'vue';
+  import { combatStore } from "../stores/combat";
   const combat = combatStore();
+  
   export default {
     name: 'DraggableWithHandle',
     data() {
@@ -33,7 +39,7 @@
         startY: 0,
         initialX: 0,
         initialY: 0,
-          combat: combat,
+        combat: combat,
       };
     },
     methods: {
@@ -58,8 +64,11 @@
         this.position.x = this.initialX + dx;
         this.position.y = this.initialY + dy;
       },
-      handleButtonClick() {
-            combat.movePause();
+      handlePauseClick() {
+        combat.movePause();
+      },
+      handleEndClick() {
+        combat.moveEnd();
       }
     }
   };
@@ -75,6 +84,20 @@
     height: 1rem;
     background-color: lightblue;
     cursor: grab;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .handle-icon {
+    font-size: 1.5rem;
+  }
+  .buttons-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+  }
+  .action-button {
+    margin-top: 10px;
   }
   </style>
   

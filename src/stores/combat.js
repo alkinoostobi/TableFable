@@ -70,7 +70,7 @@ export const combatStore = defineStore("combat", {
                 this.turnOver()
             } else {
                 this.numberOfActions--
-
+                    this.movementLeft = tokenInfo.tokens[this.initiativeOrder[this.initiativeIndex][1]][this.initiativeOrder[this.initiativeIndex][0]].speed;
             }
             this.overlay = true;
         },
@@ -95,8 +95,19 @@ export const combatStore = defineStore("combat", {
             }
         },
         moveEnd() {
-            this.actionOver()
 
+            this.movePosition.end = positionStore.getPosition(this.initiativeOrder[this.initiativeIndex][0])
+            let distanceTraveledPX = positionStore.tokenDistance(this.movePosition.end, this.movePosition.lastStop);
+            let distanceTraveledFeet = sizetranslate.pxtoFeet(distanceTraveledPX);
+            if (distanceTraveledFeet > this.movementLeft) {
+                this.movePosition.end = this.movePosition.lastStop
+                positionStore.setPosition(this.initiativeOrder[this.initiativeIndex][0], this.movePosition.lastStop);
+                alert(`hey you cant move more than ${this.movementLeft} feet`)
+            } else {
+                this.movePosition.lastStop = this.movePosition.end;
+                this.movementLeft = this.movementLeft - distanceTraveledFeet
+                this.actionOver()
+            }
         },
         attack() {},
         spell() {},
@@ -116,6 +127,9 @@ export const combatStore = defineStore("combat", {
         },
         getAction() {
             return this.action;
+        },
+        getActionNumber() {
+            return this.numberOfActions;
         },
     }
 });

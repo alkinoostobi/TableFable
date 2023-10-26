@@ -1,6 +1,6 @@
 <template>
     <div class="overlay" @click="handleTap($event)">
-      <div class="action-label pixel-border pixelborder">ACTION 1</div>
+      <div class="action-label pixel-border pixelborder">ACTION {{ 4 - combat.getActionNumber }}</div>
       <div
         class="actions"
         :style="{

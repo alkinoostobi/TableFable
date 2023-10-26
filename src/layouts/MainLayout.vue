@@ -1,9 +1,6 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    
-    
     <character-turn v-if="combat.overlay"></character-turn>
-    
 
     <q-dialog v-model="sizenotChosen" persistent>
       <q-card style="min-width: 350px">
@@ -27,15 +24,22 @@
       </q-card>
     </q-dialog>
     <div class="background-container">
-      
       <div
         class="grid-background"
         v-if="!sizenotChosen"
         :style="`background-size: ${gridFeetTranslator}px ${gridFeetTranslator}px;background-image: linear-gradient(to right, ${dmTools.getGridColor} 1px, transparent 1px),
     linear-gradient(to bottom, ${dmTools.getGridColor} 1px, transparent 1px);`"
       >
-      <span class="pixel-border pixelborder remainingFt" v-if="combat.action == 'moving'" >{{ combat.getMovementLeft }}ft remaining</span>
-      <draggable-button v-if="combat.getAction == 'moving'"></draggable-button>
+        <span
+          class="pixel-border pixelborder remainingFt"
+          v-if="combat.action === 'moving'"
+        >
+          {{ combat.getMovementLeft.toFixed(2) }}ft remaining
+        </span>
+
+        <draggable-button
+          v-if="combat.getAction == 'moving'"
+        ></draggable-button>
         <q-page-container>
           <div
             v-for="(category, catInd) in getTokens"
@@ -84,7 +88,7 @@
 <script>
 import TokenNormal from "../components/TokenNormal.vue";
 import DraggableButton from "../components/DraggableButton.vue";
-import CharacterTurn from "../overlays/CharacterTurn.vue"
+import CharacterTurn from "../overlays/CharacterTurn.vue";
 
 import { tokenPositions } from "../shared/tokenPositions"; // Adjust the import path
 import { usePositionStore } from "../stores/positionStore"; // Adjust the path as needed
@@ -92,7 +96,6 @@ import { pxTranslate } from "../stores/px2feet";
 import { useTokenStore } from "../stores/tokenInfo";
 import { combatStore } from "../stores/combat";
 import { dmtools } from "../stores/dmtools"; // Adjust the path as needed
-
 
 const sizetranslate = pxTranslate();
 const positionStore = usePositionStore();
@@ -103,7 +106,7 @@ export default {
   components: {
     TokenNormal,
     CharacterTurn,
-    DraggableButton
+    DraggableButton,
   },
   data() {
     return {
@@ -125,8 +128,7 @@ export default {
       return positionStore.getPosition(ind);
     },
   },
-  mounted() {
-  },
+  mounted() {},
   computed: {
     initiativeOrder() {
       return combat.initiativeOrder;
@@ -180,12 +182,12 @@ export default {
   background-size: cover !important;
   z-index: -1;
 }
-.remainingFt{
-  color: black; 
+.remainingFt {
+  color: black;
   font-size: 2rem;
   opacity: 0.7;
   padding: 0 1rem;
-  position:absolute;
+  position: absolute;
   z-index: 99999;
 }
 </style>
