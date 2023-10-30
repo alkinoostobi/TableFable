@@ -38,7 +38,7 @@
         </span>
 
         <draggable-button
-          v-if="combat.getAction == 'moving'"
+          v-if="combat.getAction == 'moving' ||combat.getAction == 'attack' "
         ></draggable-button>
         <q-page-container>
           <div
@@ -54,7 +54,7 @@
               :backgroundImageUrl="token.icon"
               :playing="
                 !combat.getcombatBool ||
-                combat.initiativeOrder[combat.initiativeIndex][0] == token.id ||
+                (combat.initiativeOrder[combat.initiativeIndex][0] == token.id /*&& combat.action == 'moving'*/) ||
                 combat.combatPause
               "
               :tokenid="token.id"

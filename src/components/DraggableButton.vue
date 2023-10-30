@@ -18,11 +18,13 @@
         <q-icon name="drag_handle" class="handle-icon" />
       </div>
       <div class="buttons-container">
-        <button @click="handlePauseClick" @touchstart="handlePauseClick" class="action-button">
+        <button @click="handlePauseClick" @touchstart="handlePauseClick" class="action-button" v-if="combat.action == 'moving'">
           <q-icon name="pause" /> Pause Movement
         </button>
-        <button @click="handleEndClick" @touchstart="handleEndClick" class="action-button">
-          <q-icon name="stop" /> End Movement
+        <button @click="combat.action == 'moving' ? handleEndClick : (combat.action == 'attack' ? finalizeAttack() : '')" @touchstart="combat.action == 'moving' ? handleEndClick : (combat.action == 'attack' ? finalizeAttack() : '')" class="action-button">
+          <q-icon name="stop" /> 
+          <span v-if="combat.action == 'moving'">End Movement</span>
+          <span v-if="combat.action == 'attack'">Attack</span>
         </button>
       </div>
     </div>
@@ -91,6 +93,9 @@
       },
       handleEndClick() {
         combat.moveEnd();
+      },
+        finalizeAttack() {
+        combat.finalizeAttack()
       }
     }
   };

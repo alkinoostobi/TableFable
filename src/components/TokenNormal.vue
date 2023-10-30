@@ -1,6 +1,7 @@
 <template>
   <div
     class="token-normal"
+    :class="{ 'targeted': isTargeted }"
     :style="{
       left: `${position.x}px`,
       top: `${position.y}px`,
@@ -16,14 +17,17 @@
     @touchend="playing ? stopDragging($event) : null"
     @touchcancel="playing ? stopDragging($event) : null"
     @selectstart="$event.preventDefault()"
+    @click="combat.targetSelected(tokenid)"
   ><span style="color:white">{{ tokenid }}</span></div>
 </template>
 
 <script>
 import { usePositionStore } from "../stores/positionStore"; // Adjust the path as needed
 import { pxTranslate } from "../stores/px2feet";
+import { combatStore } from "../stores/combat";
 const positionStore = usePositionStore();
 const sizetranslate = pxTranslate();
+const combat = combatStore();
 export default {
   props: {
     tokenIndex: {
@@ -59,12 +63,17 @@ export default {
         x: 0,
         y: 0,
       },
+      combat : combat
     };
   },
   computed: {
     position() {
       return positionStore.getPosition(this.tokenIndex) || { x: 0, y: 0 };
     },
+    isTargeted() {
+        const targets = combat.getTargets;
+        return targets.includes(this.tokenid);
+    }
   },
   methods: {
     startDragging(event) {
@@ -126,5 +135,15 @@ export default {
   cursor: move;
   background-size: cover;
   background-repeat: no-repeat;
+}
+.token-normal {
+  position: absolute;
+  cursor: move;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.targeted {
+  border: 2px solid red;
 }
 </style>

@@ -7,7 +7,7 @@
           transform: `rotate(${rotation}deg) translate(${positions[0]}%, ${positions[1]}%)`,
         }"
       >
-        <div class="action top-left pixel-border pixelborder">
+        <div class="action top-left pixel-border pixelborder" @click="combat.startAttack(0)">
           <div class="image-container">
             <img src="../assets/attack.png" alt="Attack icon" />
           </div>
