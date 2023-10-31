@@ -43,6 +43,8 @@
   
   <script>
   import { combatStore } from "../stores/combat";
+  import { dmtools } from "../stores/dmtools"; 
+  const condmtools = dmtools();
   const combat = combatStore();
   export default {
     name: "CharacterTurn",
@@ -52,7 +54,8 @@
         rotations: [0, 90, 180, 270],
         currentRotationIndex: 0,
             positions: [0, 0],
-            combat: combat,
+          combat: combat,
+          condmtools : condmtools,
       };
     },
     methods: {
@@ -67,18 +70,22 @@
           this.rotation = this.rotations[2];
           this.currentRotationIndex = 2;
           this.positions = [0, 200];
+          condmtools.playerposition = 'top'
         } else if (tapY > screenHeight - 50) {
           this.rotation = this.rotations[0];
           this.currentRotationIndex = 0;
           this.positions = [0, 200];
+          condmtools.playerposition = 'bottom'
         } else if (tapX < 50) {
           this.rotation = this.rotations[1];
           this.currentRotationIndex = 1;
-          this.positions = [0, 500];
+          this.positions = [0, 400];
+          condmtools.playerposition = 'left'
         } else if (tapX > screenWidth - 50) {
           this.rotation = this.rotations[3];
           this.currentRotationIndex = 3;
-          this.positions = [0, 500];
+          this.positions = [0, 400];
+          condmtools.playerposition = 'right'
         }
       },
     },
@@ -119,8 +126,8 @@
   }
   
   .image-container {
-    width: 100px;
-    height: 100px;
+    width: 6rem;
+    height: 6rem;
     display: flex;
     justify-content: center;
     align-items: center;

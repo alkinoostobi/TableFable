@@ -6,7 +6,8 @@ export const dmtools = defineStore("dmtools", {
         projectorbackground: '',
         soundtrack: '',
         tvbackground: '',
-        gridcolor: 'black'
+        gridcolor: 'black',
+        playerposition: 'bottom'
     }),
     actions: {
         setscene(gridbackground, projectorbackground, soundtrack, tvbackground) {

@@ -33,6 +33,9 @@
   <script>
   import { ref } from 'vue';
   import { combatStore } from "../stores/combat";
+
+  import { dmtools } from "../stores/dmtools"; 
+  const condmtools = dmtools();
   const combat = combatStore();
   
   export default {
@@ -45,8 +48,33 @@
         startY: 0,
         initialX: 0,
         initialY: 0,
-        combat: combat,
+        combat: combat, 
+        condmtools : condmtools,
       };
+    },
+    mounted() {
+        switch (condmtools.playerposition) {
+            case 'bottom':
+            this.position.x = 960;
+            this.position.y = 800
+              break;
+            case 'top':
+            this.position.x = 960;
+            this.position.y = 100
+              break;
+            case 'left':
+            this.position.x = 10;
+            this.position.y = 490
+              break;
+            case 'right':
+            this.position.x = 1800;
+            this.position.y = 490
+              break;
+      }
+        if (condmtools.playerposition == 'bottom') {
+            this.position.x = 960;
+            this.position.y = 800
+      }
     },
     methods: {
       startDrag(e) {
