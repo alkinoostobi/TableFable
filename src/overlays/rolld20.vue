@@ -1,8 +1,28 @@
 <template>
   <div class="overlay">
-    <div class="content">
-      <div class="die" :class="{ rolling: rolling }" :data-face="currentFace">
-        <figure v-for="i in 20" :key="i" class="face" :data-face="i"></figure>
+    <div class="dierow">
+      <div
+        class="content"
+        v-for="(die, dieind) in combat.groupRoll"
+        :key="dieind"
+        :style="{
+          color:
+            tokenInfo.tokens[tokenInfo.getCategoryById(die.id)][die.id]
+              .dicecolor,
+        }"
+      >
+        <div class="die" :class="{ rolling: rolling }" :data-face="currentFace">
+          <figure
+            v-for="i in 20"
+            :key="i"
+            class="face"
+            :data-face="i"
+            :style="`border-bottom-color : ${
+              tokenInfo.tokens[tokenInfo.getCategoryById(die.id)][die.id]
+                .dicecolor
+            }`"
+          ></figure>
+        </div>
       </div>
     </div>
 
@@ -10,52 +30,58 @@
 
     <a href="" class="randomize" @click.prevent="handleRoll">Roll!</a>
   </div>
-  </template>
-  
-  <script>
-  export default {
-    name : 'rollD20',
-    data() {
-      return {
-        sides: 20,
-        initialSide: 1,
-        currentFace: null,
-        lastFace: null,
-        timeoutId: null,
-        rolling: false,
-        transitionDuration: 500,
-        animationDuration: 3000,
-      };
+</template>
+
+<script>
+import { combatStore } from "../stores/combat";
+import { useTokenStore } from "../stores/tokenInfo";
+const combat = combatStore();
+const tokenInfo = useTokenStore();
+export default {
+  name: "rollD20",
+  data() {
+    return {
+      sides: 20,
+      initialSide: 1,
+      currentFace: null,
+      lastFace: null,
+      timeoutId: null,
+      rolling: false,
+      transitionDuration: 500,
+      animationDuration: 3000,
+      combat: combat,
+      tokenInfo: tokenInfo,
+    };
+  },
+  methods: {
+    randomFace() {
+      let face = Math.floor(Math.random() * this.sides) + this.initialSide;
+      this.lastFace = face === this.lastFace ? this.randomFace() : face;
+      return face;
     },
-    methods: {
-      randomFace() {
-        let face = Math.floor(Math.random() * this.sides) + this.initialSide;
-        this.lastFace = face === this.lastFace ? this.randomFace() : face;
-        return face;
-      },
-      rollTo(face) {
-        clearTimeout(this.timeoutId);
-        this.currentFace = face;
-      },
-      reset() {
-        this.currentFace = null;
+    rollTo(face) {
+      clearTimeout(this.timeoutId);
+      this.currentFace = face;
+    },
+    reset() {
+      this.currentFace = null;
+      this.rolling = false;
+    },
+    handleRoll() {
+      this.rolling = true;
+      clearTimeout(this.timeoutId);
+      this.timeoutId = setTimeout(() => {
         this.rolling = false;
-      },
-      handleRoll() {
-        this.rolling = true;
-        clearTimeout(this.timeoutId);
-        this.timeoutId = setTimeout(() => {
-          this.rolling = false;
-          this.rollTo(this.randomFace());
-        }, this.animationDuration);
-      },
-      handleClick(face) {
-        this.reset();
-        this.rollTo(face);
-      },
+        this.rollTo(this.randomFace());
+      }, this.animationDuration);
     },
-  };
-  </script>
+    handleClick(face) {
+      this.reset();
+      this.rollTo(face);
+    },
+  },
+};
+</script>
 <style lang="scss" scoped>
 .overlay {
   position: absolute;
@@ -71,16 +97,16 @@
   background: rgba(0, 0, 0, 0.5);
 }
 h5 {
-    color: white;
+  color: white;
 }
-  $containerWidth: 200px;
+$containerWidth: 200px;
 $containerHeight: $containerWidth;
 
-$faceWidth:  $containerWidth*0.5;
-$faceHeight: $faceWidth*0.86;
+$faceWidth: $containerWidth * 0.5;
+$faceHeight: $faceWidth * 0.86;
 
 $transitionDuration: 0.5s;
-$animationDuration:  3s;
+$animationDuration: 3s;
 
 $angle: 53deg;
 $ringAngle: -11deg;
@@ -89,19 +115,31 @@ $opacity: 0.75;
 $color: rgba(255, 117, 0, $opacity);
 
 $rotateX: -$angle;
-$translateZ: $faceWidth*0.335;
-$translateY: -$faceHeight*0.15;
-$translateRingZ: $faceWidth*0.75;
-$translateRingY: $faceHeight*0.78 + $translateY;
+$translateZ: $faceWidth * 0.335;
+$translateY: -$faceHeight * 0.15;
+$translateRingZ: $faceWidth * 0.75;
+$translateRingY: $faceHeight * 0.78 + $translateY;
 $translateLowerZ: $translateZ;
-$translateLowerY: $faceHeight*0.78 + $translateRingY;
+$translateLowerY: $faceHeight * 0.78 + $translateRingY;
 
 @keyframes roll {
-  10% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) }
-  30% { transform: rotateX(120deg) rotateY(240deg) rotateZ(0deg) translateX(40px) translateY(40px) }
-  50% { transform: rotateX(240deg) rotateY(480deg) rotateZ(0deg) translateX(-40px) translateY(-40px) }
-  70% { transform: rotateX(360deg) rotateY(720deg) rotateZ(0deg) }
-  90% { transform: rotateX(480deg) rotateY(960deg) rotateZ(0deg) }
+  10% {
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  30% {
+    transform: rotateX(120deg) rotateY(240deg) rotateZ(0deg) translateX(40px)
+      translateY(40px);
+  }
+  50% {
+    transform: rotateX(240deg) rotateY(480deg) rotateZ(0deg) translateX(-40px)
+      translateY(-40px);
+  }
+  70% {
+    transform: rotateX(360deg) rotateY(720deg) rotateZ(0deg);
+  }
+  90% {
+    transform: rotateX(480deg) rotateY(960deg) rotateZ(0deg);
+  }
 }
 
 body {
@@ -115,6 +153,7 @@ body {
   width: $containerWidth;
   height: $containerHeight;
   perspective: 1500px;
+  color: white;
 }
 
 .die {
@@ -124,97 +163,115 @@ body {
   transform-style: preserve-3d;
   transition: transform $transitionDuration ease-out;
   cursor: pointer;
-  
+
   transform: rotateX($rotateX);
-  
+
   &.rolling {
     animation: roll $animationDuration linear;
   }
-  
+
   @for $i from 1 through 5 {
     &[data-face="#{$i}"] {
       $angleMultiplier: $i - 1;
       transform: rotateX(-$angle) rotateY($sideAngle * $angleMultiplier);
     }
   }
-  
+
   @for $i from 16 through 20 {
     &[data-face="#{$i}"] {
       $angleMultiplier: $i - 15;
-      transform: rotateX(-$angle + 180deg) rotateY(-$sideAngle * $angleMultiplier);
+      transform: rotateX(-$angle + 180deg)
+        rotateY(-$sideAngle * $angleMultiplier);
     }
   }
-  
+
   @for $i from 6 through 10 {
     &[data-face="#{$i}"] {
       $angleMultiplier: $i - 6;
-      transform: rotateX(-$ringAngle) rotateZ(180deg) rotateY($sideAngle * $angleMultiplier);
+      transform: rotateX(-$ringAngle)
+        rotateZ(180deg)
+        rotateY($sideAngle * $angleMultiplier);
     }
   }
-  
+
   @for $i from 11 through 15 {
     &[data-face="#{$i}"] {
       $angleMultiplier: $i - 8;
-      transform: rotateX(-$ringAngle) rotateY(-$sideAngle * $angleMultiplier - $sideAngle/2);
+      transform: rotateX(-$ringAngle)
+        rotateY(-$sideAngle * $angleMultiplier - $sideAngle/2);
     }
   }
-  
+
   .face {
-    $horizontalMargin: -$faceWidth*0.5;
-    
+    $horizontalMargin: -$faceWidth * 0.5;
+
     position: absolute;
     left: 50%;
     top: 0;
     margin: 0 $horizontalMargin;
-    border-left: $faceWidth*0.5 solid transparent;
-    border-right: $faceWidth*0.5 solid transparent;
-    border-bottom: $faceHeight solid $color;
+    border-left: $faceWidth * 0.5 solid transparent;
+    border-right: $faceWidth * 0.5 solid transparent;
+    border-bottom: $faceHeight solid;
     width: 0px;
     height: 0px;
     transform-style: preserve-3d;
     backface-visibility: hidden;
-    
+
     counter-increment: steps 1;
-  
+
     &:before {
       content: counter(steps);
       position: absolute;
-      top: $faceHeight*0.25;
+      top: $faceHeight * 0.25;
       left: -$faceWidth;
       color: #fff;
       text-shadow: 1px 1px 3px #000;
-      font-size: $faceHeight*0.5;
+      font-size: $faceHeight * 0.5;
       text-align: center;
-      line-height: $faceHeight*0.9;
-      width: $faceWidth*2;
+      line-height: $faceHeight * 0.9;
+      width: $faceWidth * 2;
       height: $faceHeight;
     }
-    
+
     @for $i from 1 through 5 {
       &:nth-child(#{$i}) {
         $angleMultiplier: $i - 1;
-        transform: rotateY(-$sideAngle * $angleMultiplier) translateZ($translateZ) translateY($translateY) rotateX($angle);
+        transform: rotateY(-$sideAngle * $angleMultiplier)
+          translateZ($translateZ)
+          translateY($translateY)
+          rotateX($angle);
       }
     }
-      
+
     @for $i from 16 through 20 {
       &:nth-child(#{$i}) {
         $angleMultiplier: $i - 18;
-        transform: rotateY($sideAngle * $angleMultiplier + $sideAngle/2) translateZ($translateLowerZ) translateY($translateLowerY) rotateZ(180deg) rotateX($angle);
+        transform: rotateY($sideAngle * $angleMultiplier + $sideAngle/2)
+          translateZ($translateLowerZ)
+          translateY($translateLowerY)
+          rotateZ(180deg)
+          rotateX($angle);
       }
     }
-      
+
     @for $i from 6 through 10 {
       &:nth-child(#{$i}) {
         $angleMultiplier: $i - 11;
-        transform: rotateY(-$sideAngle * $angleMultiplier) translateZ($translateRingZ) translateY($translateRingY) rotateZ(180deg) rotateX($ringAngle);
+        transform: rotateY(-$sideAngle * $angleMultiplier)
+          translateZ($translateRingZ)
+          translateY($translateRingY)
+          rotateZ(180deg)
+          rotateX($ringAngle);
       }
     }
-      
+
     @for $i from 11 through 15 {
       &:nth-child(#{$i}) {
         $angleMultiplier: $i - 8;
-        transform: rotateY($sideAngle * $angleMultiplier + $sideAngle/2) translateZ($translateRingZ) translateY($translateRingY) rotateX($ringAngle);
+        transform: rotateY($sideAngle * $angleMultiplier + $sideAngle/2)
+          translateZ($translateRingZ)
+          translateY($translateRingY)
+          rotateX($ringAngle);
       }
     }
   }
@@ -228,7 +285,7 @@ ul {
   list-style: none;
   margin: 0;
   padding: 0;
-  
+
   > li {
     display: inline-block;
     margin: 10px 10px;
@@ -247,19 +304,29 @@ a {
   border: 1px solid #dcdcdc;
   border-radius: 4px;
   background-color: #999;
-      
+
   &.active {
     background-color: #333;
   }
-      
+
   &:hover {
     background-color: #666;
   }
-    
+
   &.randomize {
     width: auto;
     margin: 20px 10px;
   }
 }
+.dierow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px; /* Adjust this value as needed */
+  margin-bottom: 20px; /* Adjust this value as needed */
+}
 
-  </style>
+.content {
+  margin: 0 10px; /* Adjust this value as needed */
+}
+</style>
