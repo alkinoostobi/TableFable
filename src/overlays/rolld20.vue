@@ -1,8 +1,7 @@
 <template>
-  <div class="overlay">
+  <div v-if="visible" class="overlay">
     <div class="dierow">
       <div
-        class="content"
         v-for="(die, dieind) in combat.groupRoll"
         :key="dieind"
         :style="{
@@ -10,17 +9,18 @@
             tokenInfo.tokens[tokenInfo.getCategoryById(die.id)][die.id]
               .dicecolor,
         }"
+        class="content"
       >
-        <div class="die" :class="{ rolling: rolling }" :data-face="currentFace">
+        <div :class="{ rolling: rolling }" :data-face="currentFace" class="die">
           <figure
             v-for="i in 20"
             :key="i"
-            class="face"
             :data-face="i"
             :style="`border-bottom-color : ${
               tokenInfo.tokens[tokenInfo.getCategoryById(die.id)][die.id]
                 .dicecolor
             }`"
+            class="face"
           ></figure>
         </div>
       </div>
@@ -28,13 +28,16 @@
 
     <h5>Click to quickroll or gesture to start rolling</h5>
 
-    <a href="" class="randomize" @click.prevent="handleRoll">Roll!</a>
+    <a class="randomize" href="" @click.prevent="handleRoll">Roll!</a>
+    <a class="randomize" href="" @click.prevent="handleRoll">Continue</a>
   </div>
 </template>
 
 <script>
-import { combatStore } from "../stores/combat";
-import { useTokenStore } from "../stores/tokenInfo";
+import {combatStore} from "stores/combat";
+import {useTokenStore} from "stores/tokenInfo";
+import {watch} from "vue";
+
 const combat = combatStore();
 const tokenInfo = useTokenStore();
 export default {
@@ -51,7 +54,11 @@ export default {
       animationDuration: 3000,
       combat: combat,
       tokenInfo: tokenInfo,
+      visible: 0,
+      rollend: false,
     };
+  },
+  created() {
   },
   methods: {
     randomFace() {
@@ -67,12 +74,32 @@ export default {
       this.currentFace = null;
       this.rolling = false;
     },
+    show() {
+      this.visible = true;
+    },
+    // Watch d20appear from combat.js and when it changes either show or hide the whole rolld20 overlay
+    watch: {
+      'combat.d20appear': function (newVal, oldVal) {
+        if (newVal == true) {
+          this.show();
+        } else {
+          this.hide();
+        }
+      }
+    },
+    hide() {
+      this.visible = false;
+    },
+    startRoll() {
+      this.rolling = true
+    },
     handleRoll() {
       this.rolling = true;
       clearTimeout(this.timeoutId);
       this.timeoutId = setTimeout(() => {
         this.rolling = false;
         this.rollTo(this.randomFace());
+        this.rollend = true;
       }, this.animationDuration);
     },
     handleClick(face) {
@@ -96,9 +123,11 @@ export default {
   align-items: center;
   background: rgba(0, 0, 0, 0.5);
 }
+
 h5 {
   color: white;
 }
+
 $containerWidth: 200px;
 $containerHeight: $containerWidth;
 
@@ -127,12 +156,10 @@ $translateLowerY: $faceHeight * 0.78 + $translateRingY;
     transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
   }
   30% {
-    transform: rotateX(120deg) rotateY(240deg) rotateZ(0deg) translateX(40px)
-      translateY(40px);
+    transform: rotateX(120deg) rotateY(240deg) rotateZ(0deg) translateX(40px) translateY(40px);
   }
   50% {
-    transform: rotateX(240deg) rotateY(480deg) rotateZ(0deg) translateX(-40px)
-      translateY(-40px);
+    transform: rotateX(240deg) rotateY(480deg) rotateZ(0deg) translateX(-40px) translateY(-40px);
   }
   70% {
     transform: rotateX(360deg) rotateY(720deg) rotateZ(0deg);
@@ -180,25 +207,21 @@ body {
   @for $i from 16 through 20 {
     &[data-face="#{$i}"] {
       $angleMultiplier: $i - 15;
-      transform: rotateX(-$angle + 180deg)
-        rotateY(-$sideAngle * $angleMultiplier);
+      transform: rotateX(-$angle + 180deg) rotateY(-$sideAngle * $angleMultiplier);
     }
   }
 
   @for $i from 6 through 10 {
     &[data-face="#{$i}"] {
       $angleMultiplier: $i - 6;
-      transform: rotateX(-$ringAngle)
-        rotateZ(180deg)
-        rotateY($sideAngle * $angleMultiplier);
+      transform: rotateX(-$ringAngle) rotateZ(180deg) rotateY($sideAngle * $angleMultiplier);
     }
   }
 
   @for $i from 11 through 15 {
     &[data-face="#{$i}"] {
       $angleMultiplier: $i - 8;
-      transform: rotateX(-$ringAngle)
-        rotateY(-$sideAngle * $angleMultiplier - $sideAngle/2);
+      transform: rotateX(-$ringAngle) rotateY(-$sideAngle * $angleMultiplier - $sideAngle/2);
     }
   }
 
@@ -236,42 +259,28 @@ body {
     @for $i from 1 through 5 {
       &:nth-child(#{$i}) {
         $angleMultiplier: $i - 1;
-        transform: rotateY(-$sideAngle * $angleMultiplier)
-          translateZ($translateZ)
-          translateY($translateY)
-          rotateX($angle);
+        transform: rotateY(-$sideAngle * $angleMultiplier) translateZ($translateZ) translateY($translateY) rotateX($angle);
       }
     }
 
     @for $i from 16 through 20 {
       &:nth-child(#{$i}) {
         $angleMultiplier: $i - 18;
-        transform: rotateY($sideAngle * $angleMultiplier + $sideAngle/2)
-          translateZ($translateLowerZ)
-          translateY($translateLowerY)
-          rotateZ(180deg)
-          rotateX($angle);
+        transform: rotateY($sideAngle * $angleMultiplier + $sideAngle/2) translateZ($translateLowerZ) translateY($translateLowerY) rotateZ(180deg) rotateX($angle);
       }
     }
 
     @for $i from 6 through 10 {
       &:nth-child(#{$i}) {
         $angleMultiplier: $i - 11;
-        transform: rotateY(-$sideAngle * $angleMultiplier)
-          translateZ($translateRingZ)
-          translateY($translateRingY)
-          rotateZ(180deg)
-          rotateX($ringAngle);
+        transform: rotateY(-$sideAngle * $angleMultiplier) translateZ($translateRingZ) translateY($translateRingY) rotateZ(180deg) rotateX($ringAngle);
       }
     }
 
     @for $i from 11 through 15 {
       &:nth-child(#{$i}) {
         $angleMultiplier: $i - 8;
-        transform: rotateY($sideAngle * $angleMultiplier + $sideAngle/2)
-          translateZ($translateRingZ)
-          translateY($translateRingY)
-          rotateX($ringAngle);
+        transform: rotateY($sideAngle * $angleMultiplier + $sideAngle/2) translateZ($translateRingZ) translateY($translateRingY) rotateX($ringAngle);
       }
     }
   }
@@ -318,6 +327,7 @@ a {
     margin: 20px 10px;
   }
 }
+
 .dierow {
   display: flex;
   justify-content: center;

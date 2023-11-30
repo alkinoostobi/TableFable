@@ -1,7 +1,9 @@
-import { defineStore } from "pinia";
-import { useTokenStore } from "./tokenInfo";
-import { pxTranslate } from "./px2feet";
-import { usePositionStore } from "./positionStore"; // Adjust the path as needed
+import {defineStore} from "pinia";
+import {useTokenStore} from "./tokenInfo";
+import {pxTranslate} from "./px2feet";
+import {usePositionStore} from "./positionStore"; // Adjust the path as needed
+
+
 // Access the tokenInfo store
 const tokenInfo = useTokenStore();
 // Access the positionStore store
@@ -35,7 +37,12 @@ export const combatStore = defineStore("combat", {
       },
       targets: []
     },
-    groupRoll: [{ id: 'pl1', skill: 'Perception' }, { id: 'pl2', skill: 'Perception' }, { id: 'pl3', skill: 'Perception' }, { id: 'pl4', skill: 'Perception' }]
+    groupRoll: [{id: 'pl1', skill: 'Perception'}, {id: 'pl2', skill: 'Perception'}, {
+      id: 'pl3',
+      skill: 'Perception'
+    }, {id: 'pl4', skill: 'Perception'}],
+    groupRollResults: [{pl1: -1}, {pl2: -1}, {pl3: -1}, {pl4: -1}],
+    d20appear: false,
   }),
   actions: {
     combatStart(rollSkill) {
@@ -49,13 +56,13 @@ export const combatStore = defineStore("combat", {
       for (const pcId in tokenInfo.tokens.pcs) {
         const pc = tokenInfo.tokens.pcs[pcId];
         const initiativeRoll = Math.floor(Math.random() * 20) + tokenInfo.tokens.pcs[pcId].skills[rollSkill][0] + tokenInfo.tokens.pcs[pcId].stats[tokenInfo.tokens.pcs[pcId].skills[rollSkill][1]][1];
-        tokensWithInitiative.push({ id: pcId, type: "pcs", initiative: initiativeRoll });
+        tokensWithInitiative.push({id: pcId, type: "pcs", initiative: initiativeRoll});
       }
 
       // Calculate initiative for non-player characters
       for (const npcId in tokenInfo.tokens.npcs) {
         const perceptionSkillnpc = tokenInfo.tokens.npcs[npcId].perception;
-        tokensWithInitiative.push({ id: npcId, type: "npcs", initiative: perceptionSkillnpc });
+        tokensWithInitiative.push({id: npcId, type: "npcs", initiative: perceptionSkillnpc});
       }
 
       // Sort tokens by initiative in descending order
@@ -80,7 +87,7 @@ export const combatStore = defineStore("combat", {
     },
     actionOver() {
       this.action = ''
-      if (this.numberOfActions == 1) {
+      if (this.numberOfActions === 1) {
         this.turnOver()
       } else {
         this.numberOfActions--
@@ -123,8 +130,11 @@ export const combatStore = defineStore("combat", {
         this.actionOver()
       }
     },
-    rollDice(numberOfDice, die, perDieModifier = 0, finalModifier = 0) {
+    async rollDice(numberOfDice, die, perDieModifier = 0, finalModifier = 0) {
       let result = 0;
+      if (die === 20) {
+        this.d20appear = true;
+      }
       for (let i = 0; i < numberOfDice; i++) {
         const roll = Math.floor(Math.random() * die) + 1;
         result += roll + perDieModifier;
@@ -133,7 +143,7 @@ export const combatStore = defineStore("combat", {
       return result;
     },
     targetSelected(targetID) {
-      if (this.action != 'attack' || targetID == this.initiativeOrder[this.initiativeIndex][0]) return;
+      if (this.action !== 'attack' || targetID === this.initiativeOrder[this.initiativeIndex][0]) return;
       const index = this.attack.targets.indexOf(targetID);
       if (index !== -1) {
         // If targetID is found in the array, remove it
@@ -194,13 +204,18 @@ export const combatStore = defineStore("combat", {
       this.actionOver();
     },
     addToGrouproll(id, skill) {
-      this.groupRoll.push({ 'id': id, 'skill': skill })
+      this.groupRoll.push({'id': id, 'skill': skill})
     },
     cleanGroupRoll() {
       this.groupRoll.length = 0;
     },
-    spell() { },
-    ability() { },
+    spell() {
+    },
+    ability() {
+    },
+    setd20appear() {
+      this.d20appear = false;
+    }
 
   },
   getters: {
@@ -224,4 +239,6 @@ export const combatStore = defineStore("combat", {
       return this.attack.targets;
     }
   }
+
+
 });

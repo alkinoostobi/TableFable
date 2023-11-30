@@ -1,11 +1,11 @@
 <template>
-  <router-view />
+  <router-view/>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
-import { watch } from 'vue';
-import { useTokenStore } from "../src/stores/tokenInfo";
+import {defineComponent, watch} from 'vue'
+import {useTokenStore} from "stores/tokenInfo";
+
 export default defineComponent({
   name: 'App',
   setup() {
@@ -22,7 +22,7 @@ export default defineComponent({
           }
         }
       },
-      { deep: true } // Watch nested properties
+      {deep: true} // Watch nested properties
     );
 
     // Other component logic...

@@ -10,35 +10,35 @@
 
         <q-card-section class="q-pt-none">
           <q-input
-            dense
             v-model="gridSize"
             autofocus
+            dense
             @keyup.enter="prompt = false"
           />
         </q-card-section>
 
         <q-card-actions align="right" class="text-primary">
-          <q-btn flat label="Cancel" v-close-popup />
-          <q-btn flat label="Enter" v-close-popup @click="SaveSize()" />
+          <q-btn v-close-popup flat label="Cancel"/>
+          <q-btn v-close-popup flat label="Enter" @click="SaveSize()"/>
         </q-card-actions>
       </q-card>
     </q-dialog>
     <div class="background-container">
       <div
-        class="grid-background"
         v-if="!sizenotChosen"
         :style="`background-size: ${gridFeetTranslator}px ${gridFeetTranslator}px;background-image: linear-gradient(to right, ${dmTools.getGridColor} 1px, transparent 1px),
     linear-gradient(to bottom, ${dmTools.getGridColor} 1px, transparent 1px);`"
+        class="grid-background"
       >
         <span
-          class="pixel-border pixelborder remainingFt"
           v-if="combat.action === 'moving'"
+          class="pixel-border pixelborder remainingFt"
         >
           {{ combat.getMovementLeft.toFixed(2) }}ft remaining
         </span>
 
         <draggable-button
-          v-if="combat.getAction == 'moving' ||combat.getAction == 'attack' "
+          v-if="combat.getAction === 'moving' ||combat.getAction === 'attack' "
         ></draggable-button>
         <q-page-container>
           <div
@@ -48,38 +48,38 @@
             <token-normal
               v-for="(token, tokenInd) in category"
               :key="'token' + tokenInd"
-              :token-index="token.id"
-              :width-boxes="token.size.x"
-              :height-boxes="token.size.y"
               :backgroundImageUrl="token.icon"
+              :height-boxes="token.size.y"
               :playing="
                 !combat.getcombatBool ||
-                (combat.initiativeOrder[combat.initiativeIndex][0] == token.id /*&& combat.action == 'moving'*/) ||
+                (combat.initiativeOrder[combat.initiativeIndex][0] === token.id /*&& combat.action == 'moving'*/) ||
                 combat.combatPause
               "
-              :tokenid="token.id"
-              :style="` 
+              :style="`
                -webkit-transform: rotate(${token.rotation});
                -moz-transform: rotate(${token.rotation});
                -ms-transform: rotate(${token.rotation});
-               -o-transform: rotate(${token.rotation}); 
+               -o-transform: rotate(${token.rotation});
                transform: rotate(${token.rotation}); `"
+              :token-index="token.id"
+              :tokenid="token.id"
+              :width-boxes="token.size.x"
             ></token-normal>
           </div>
         </q-page-container>
         <div class="circular-button">
           <q-btn
-            round
             color="primary"
-            size="lg"
             icon="auto_fix_high"
+            round
+            size="lg"
             @click="combat.combatStart('Perception')"
           />
         </div>
       </div>
       <div
-        class="background-image"
         :style="`background: url(${dmTools.getGridBackground}) no-repeat center;`"
+        class="background-image"
       ></div>
     </div>
   </q-layout>
@@ -91,12 +91,12 @@ import DraggableButton from "../components/DraggableButton.vue";
 import CharacterTurn from "../overlays/CharacterTurn.vue";
 import rollD20 from "../overlays/rolld20.vue"
 
-import { tokenPositions } from "../shared/tokenPositions"; // Adjust the import path
-import { usePositionStore } from "../stores/positionStore"; // Adjust the path as needed
-import { pxTranslate } from "../stores/px2feet";
-import { useTokenStore } from "../stores/tokenInfo";
-import { combatStore } from "../stores/combat";
-import { dmtools } from "../stores/dmtools"; // Adjust the path as needed
+import {tokenPositions} from "../shared/tokenPositions"; // Adjust the import path
+import {usePositionStore} from "stores/positionStore"; // Adjust the path as needed
+import {pxTranslate} from "stores/px2feet";
+import {useTokenStore} from "stores/tokenInfo";
+import {combatStore} from "stores/combat";
+import {dmtools} from "stores/dmtools"; // Adjust the path as needed
 
 const sizetranslate = pxTranslate();
 const positionStore = usePositionStore();
@@ -130,7 +130,8 @@ export default {
       return positionStore.getPosition(ind);
     },
   },
-  mounted() {},
+  mounted() {
+  },
   computed: {
     initiativeOrder() {
       return combat.initiativeOrder;
@@ -145,7 +146,7 @@ export default {
       return sizetranslate.feetTranslator(5);
     },
     positio1n() {
-      return positionStore.getPosition(0) || { x: 0, y: 0 };
+      return positionStore.getPosition(0) || {x: 0, y: 0};
     },
   },
 };
@@ -159,6 +160,7 @@ export default {
   flex-direction: column;
   align-items: center;
 }
+
 .overlay {
   background: rgba(0, 0, 0, 0.5); /* Adjust the opacity as needed */
   position: fixed;
@@ -169,6 +171,7 @@ export default {
   z-index: 9999; /* Adjust the z-index as needed */
   pointer-events: auto; /* Allows interaction with the overlay */
 }
+
 .background-container {
   position: relative;
   width: 100vw;
@@ -184,6 +187,7 @@ export default {
   background-size: cover !important;
   z-index: -1;
 }
+
 .remainingFt {
   color: black;
   font-size: 2rem;

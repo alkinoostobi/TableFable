@@ -1,4 +1,4 @@
-import { defineStore } from "pinia";
+import {defineStore} from "pinia";
 
 export const useTokenStore = defineStore("token", {
   state: () => ({
@@ -61,7 +61,7 @@ export const useTokenStore = defineStore("token", {
             'Thievery	': [0, 'dex'],
           },
           'attacks': [
-            { 'name': 'Long spear', 'numbOfDice': 1, 'damage': 6, 'range': 10, 'bonus': 4, 'targets': 1, }
+            {'name': 'Long spear', 'numbOfDice': 1, 'damage': 6, 'range': 10, 'bonus': 4, 'targets': 1,}
           ]
         },
         'pl2': {
@@ -121,7 +121,7 @@ export const useTokenStore = defineStore("token", {
             'Thievery	': [0, 'dex'],
           },
           'attacks': [
-            { 'name': 'Long spear', 'numbOfDice': 1, 'damage': 6, 'range': 10, 'bonus': 4, 'targets': 1, }
+            {'name': 'Long spear', 'numbOfDice': 1, 'damage': 6, 'range': 10, 'bonus': 4, 'targets': 1,}
           ]
         },
         'pl4': {
@@ -181,7 +181,7 @@ export const useTokenStore = defineStore("token", {
             'Thievery	': [0, 'dex'],
           },
           'attacks': [
-            { 'name': 'Long spear', 'numbOfDice': 1, 'damage': 6, 'range': 10, 'bonus': 4, 'targets': 1, }
+            {'name': 'Long spear', 'numbOfDice': 1, 'damage': 6, 'range': 10, 'bonus': 4, 'targets': 1,}
           ]
         }, 'pl3': {
           'id': 'pl3',
@@ -240,7 +240,7 @@ export const useTokenStore = defineStore("token", {
             'Thievery	': [0, 'dex'],
           },
           'attacks': [
-            { 'name': 'Long spear', 'numbOfDice': 1, 'damage': 6, 'range': 10, 'bonus': 4, 'targets': 1, }
+            {'name': 'Long spear', 'numbOfDice': 1, 'damage': 6, 'range': 10, 'bonus': 4, 'targets': 1,}
           ]
         },
       },
@@ -267,7 +267,7 @@ export const useTokenStore = defineStore("token", {
             'will': 13,
           },
           'attacks': [
-            { 'bonus': 14, 'numbOfDice': 1, 'damage': 6, 'range': 5, 'targets': 1, }
+            {'bonus': 14, 'numbOfDice': 1, 'damage': 6, 'range': 5, 'targets': 1,}
           ]
         },
         'mon2': {
@@ -292,7 +292,7 @@ export const useTokenStore = defineStore("token", {
             'will': 13,
           },
           'attacks': [
-            { 'bonus': 14, 'numbOfDice': 1, 'damage': 6, 'range': 5, 'targets': 1, }
+            {'bonus': 14, 'numbOfDice': 1, 'damage': 6, 'range': 5, 'targets': 1,}
           ]
         },
         'mon3': {
@@ -317,7 +317,7 @@ export const useTokenStore = defineStore("token", {
             'will': 13,
           },
           'attacks': [
-            { 'bonus': 14, 'numbOfDice': 1, 'damage': 6, 'range': 5, 'targets': 1, }
+            {'bonus': 14, 'numbOfDice': 1, 'damage': 6, 'range': 5, 'targets': 1,}
           ]
         },
         'mon4': {
@@ -342,7 +342,7 @@ export const useTokenStore = defineStore("token", {
             'will': 13,
           },
           'attacks': [
-            { 'bonus': 14, 'numbOfDice': 1, 'damage': 6, 'range': 5, 'targets': 1, }
+            {'bonus': 14, 'numbOfDice': 1, 'damage': 6, 'range': 5, 'targets': 1,}
           ]
         },
       }

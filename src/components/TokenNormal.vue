@@ -1,6 +1,5 @@
 <template>
   <div
-    class="token-normal"
     :class="{ 'targeted': isTargeted }"
     :style="{
       left: `${position.x}px`,
@@ -9,22 +8,24 @@
       height: `${size.y}px`,
       'background-image': `url('${backgroundImageUrl}')`,
     }"
+    class="token-normal"
+    @click="combat.targetSelected(tokenid)"
     @mousedown="playing ? startDragging($event) : null"
     @mousemove="playing ? drag($event) : null"
     @mouseup="playing ? stopDragging($event) : null"
-    @touchstart="playing ? startTouchDragging($event) : null"
-    @touchmove="playing ? touchDrag($event) : null"
-    @touchend="playing ? stopDragging($event) : null"
-    @touchcancel="playing ? stopDragging($event) : null"
     @selectstart="$event.preventDefault()"
-    @click="combat.targetSelected(tokenid)"
+    @touchcancel="playing ? stopDragging($event) : null"
+    @touchend="playing ? stopDragging($event) : null"
+    @touchmove="playing ? touchDrag($event) : null"
+    @touchstart="playing ? startTouchDragging($event) : null"
   ><span style="color:white">{{ tokenid }}</span></div>
 </template>
 
 <script>
-import { usePositionStore } from "../stores/positionStore"; // Adjust the path as needed
-import { pxTranslate } from "../stores/px2feet";
-import { combatStore } from "../stores/combat";
+import {usePositionStore} from "stores/positionStore"; // Adjust the path as needed
+import {pxTranslate} from "stores/px2feet";
+import {combatStore} from "stores/combat";
+
 const positionStore = usePositionStore();
 const sizetranslate = pxTranslate();
 const combat = combatStore();
@@ -58,21 +59,21 @@ export default {
   data() {
     return {
       isDragging: false,
-      startPosition: { x: 0, y: 0 },
+      startPosition: {x: 0, y: 0},
       size: {
         x: 0,
         y: 0,
       },
-      combat : combat
+      combat: combat
     };
   },
   computed: {
     position() {
-      return positionStore.getPosition(this.tokenIndex) || { x: 0, y: 0 };
+      return positionStore.getPosition(this.tokenIndex) || {x: 0, y: 0};
     },
     isTargeted() {
-        const targets = combat.getTargets;
-        return targets.includes(this.tokenid);
+      const targets = combat.getTargets;
+      return targets.includes(this.tokenid);
     }
   },
   methods: {
@@ -119,7 +120,7 @@ export default {
     },
   },
   created() {
-    positionStore.setPosition(this.tokenIndex, { x: 0, y: 0 });
+    positionStore.setPosition(this.tokenIndex, {x: 0, y: 0});
   },
   mounted() {
     this.size.x = sizetranslate.feetTranslator(5 * this.widthBoxes);
@@ -136,6 +137,7 @@ export default {
   background-size: cover;
   background-repeat: no-repeat;
 }
+
 .token-normal {
   position: absolute;
   cursor: move;
