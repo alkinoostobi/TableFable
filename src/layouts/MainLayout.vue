@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hHh lpR fFf">
     <character-turn v-if="combat.overlay"></character-turn>
-    <roll-d20 rolls="4"></roll-d20>
+    <roll-d20></roll-d20>
     <q-dialog v-model="sizenotChosen" persistent>
       <q-card style="min-width: 350px">
         <q-card-section>

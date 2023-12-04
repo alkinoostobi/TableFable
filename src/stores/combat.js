@@ -130,17 +130,31 @@ export const combatStore = defineStore("combat", {
         this.actionOver()
       }
     },
-    async rollDice(numberOfDice, die, perDieModifier = 0, finalModifier = 0) {
+
+    async rollMyDice(numberOfDice, die, perDieModifier = 0, finalModifier = 0) {
       let result = 0;
       if (die === 20) {
         this.d20appear = true;
+        //await until all groupRollResults values are not -1
+        await new Promise(resolve => {
+          const interval = setInterval(() => {
+            if (this.groupRollResults.every(item => Object.values(item)[0] !== -1)) {
+              clearInterval(interval);
+              resolve();
+            }
+          }, 100);
+        });
+        if(this.action = 'attack'){
+          return this.groupRollResults[0][this.groupRoll[0].id] + perDieModifier + finalModifier;}
+      }else{
+        for (let i = 0; i < numberOfDice; i++) {
+          const roll = Math.floor(Math.random() * die) + 1;
+          result += roll + perDieModifier;
+        }
+        result = result + finalModifier;
+        return result;
       }
-      for (let i = 0; i < numberOfDice; i++) {
-        const roll = Math.floor(Math.random() * die) + 1;
-        result += roll + perDieModifier;
-      }
-      result = result + finalModifier;
-      return result;
+
     },
     targetSelected(targetID) {
       if (this.action !== 'attack' || targetID === this.initiativeOrder[this.initiativeIndex][0]) return;
@@ -172,23 +186,28 @@ export const combatStore = defineStore("combat", {
       this.attack.loadedAttack.targets = attackobj.targets
       this.attack.loadedAttack.numbOfDice = attackobj.numbOfDice;
     },
-    finalizeAttack() {
+    async finalizeAttack() {
       console.log("attacked");
       if (this.attack.targets.length === 0) {
         alert('Select Targets');
         return;
       }
       console.log('this.attack.targets.length:', this.attack.targets.length); // Add this line for debugging
+      //change groupRoll and groupRollResults to be only one roll of the player who is attacking
+      this.groupRoll.length = 0;
+      this.groupRollResults.length = 0;
+      this.groupRoll.push({'id': this.initiativeOrder[this.initiativeIndex][0], 'skill': 'Attack'});
+      this.groupRollResults.push({[this.initiativeOrder[this.initiativeIndex][0]]: -1});
 
       for (let i = 0; i < this.attack.targets.length; i++) {
         console.log('Inside loop'); // Add this line for debugging
 
-        let attackroll = this.rollDice(1, 20, this.attack.loadedAttack.bonus, 0);
+        let attackroll = await this.rollMyDice(1, 20, this.attack.loadedAttack.bonus, 0);
         let target = this.attack.targets[i];
         let category = tokenInfo.getCategoryById(target);
         let targetAC = tokenInfo.tokens[category][target].defense.ac;
         if (attackroll >= targetAC) {
-          let damage = this.rollDice(this.attack.loadedAttack.numbOfDice, this.attack.loadedAttack.damage, 0, this.attack.loadedAttack.bonus);
+          let damage = this.rollMyDice(this.attack.loadedAttack.numbOfDice, this.attack.loadedAttack.damage, 0, this.attack.loadedAttack.bonus);
           tokenInfo.tokens[category][target].defense.hp = tokenInfo.tokens[category][target].defense.hp - damage;
           console.log(` ${target} took ${damage} points of damage`);
         } else {

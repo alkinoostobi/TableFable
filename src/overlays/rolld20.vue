@@ -29,14 +29,13 @@
     <h5>Click to quickroll or gesture to start rolling</h5>
 
     <a class="randomize" href="" @click.prevent="handleRoll">Roll!</a>
-    <a class="randomize" href="" @click.prevent="handleRoll">Continue</a>
+    <a class="randomize" href="" @click.prevent="result">Continue</a>
   </div>
 </template>
 
 <script>
 import {combatStore} from "stores/combat";
 import {useTokenStore} from "stores/tokenInfo";
-import {watch} from "vue";
 
 const combat = combatStore();
 const tokenInfo = useTokenStore();
@@ -60,6 +59,16 @@ export default {
   },
   created() {
   },
+  // Watch d20appear from combat.js and when it changes either show or hide the whole rolld20 overlay
+  watch: {
+    'combat.d20appear': function (newVal, oldVal) {
+      if (newVal == true) {
+        this.show();
+      } else {
+        this.hide();
+      }
+    }
+  },
   methods: {
     randomFace() {
       let face = Math.floor(Math.random() * this.sides) + this.initialSide;
@@ -77,16 +86,6 @@ export default {
     show() {
       this.visible = true;
     },
-    // Watch d20appear from combat.js and when it changes either show or hide the whole rolld20 overlay
-    watch: {
-      'combat.d20appear': function (newVal, oldVal) {
-        if (newVal == true) {
-          this.show();
-        } else {
-          this.hide();
-        }
-      }
-    },
     hide() {
       this.visible = false;
     },
@@ -101,6 +100,9 @@ export default {
         this.rollTo(this.randomFace());
         this.rollend = true;
       }, this.animationDuration);
+    },
+    result() {
+
     },
     handleClick(face) {
       this.reset();
