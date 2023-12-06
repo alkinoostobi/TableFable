@@ -1,5 +1,6 @@
 <template>
   <div v-if="visible" class="overlay">
+    {{combat.groupRollResults}}
     <div class="dierow">
       <div
         v-for="(die, dieind) in combat.groupRoll"
@@ -11,7 +12,7 @@
         }"
         class="content"
       >
-        <div :class="{ rolling: rolling }" :data-face="currentFace" class="die">
+        <div :class="{ rolling: rolling }" :data-face="currentFace[die.id]" class="die">
           <figure
             v-for="i in 20"
             :key="i"
@@ -45,7 +46,7 @@ export default {
     return {
       sides: 20,
       initialSide: 1,
-      currentFace: null,
+      currentFace: {},
       lastFace: null,
       timeoutId: null,
       rolling: false,
@@ -75,9 +76,9 @@ export default {
       this.lastFace = face === this.lastFace ? this.randomFace() : face;
       return face;
     },
-    rollTo(face) {
-      clearTimeout(this.timeoutId);
-      this.currentFace = face;
+    rollTo(face, id) {
+      clearTimeout(this.timeoutId)
+      this.currentFace[id] = face;
     },
     reset() {
       this.currentFace = null;
@@ -96,12 +97,27 @@ export default {
       this.rolling = true;
       clearTimeout(this.timeoutId);
       this.timeoutId = setTimeout(() => {
-        this.rolling = false;
-        this.rollTo(this.randomFace());
+        this.rolling = false
+//make a rollTo for each die in groupRoll and save it on the appropriate id
+        for (const die in this.combat.groupRoll) {
+          this.rollTo(this.randomFace(), this.combat.groupRoll[die].id);
+        }
+
         this.rollend = true;
       }, this.animationDuration);
     },
     result() {
+        //store each roll result in groupRollResults from currentFace
+        for (const die in this.combat.groupRoll) {
+          this.combat.groupRollResults[this.combat.groupRoll[die].id] = this.currentFace[this.combat.groupRoll[die].id]
+        }
+        if (this.combat.action != 'attack') {
+          this.combat.groupRollResults = [];
+          this.combat.groupRoll = [];
+        }
+
+        //set this.combat.d20appear to false
+        this.combat.d20appear = false;
 
     },
     handleClick(face) {
