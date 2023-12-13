@@ -183,6 +183,16 @@ export const combatStore = defineStore("combat", {
       this.attack.loadedAttack.targets = attackobj.targets
       this.attack.loadedAttack.numbOfDice = attackobj.numbOfDice;
     },
+    cancelAttack() {
+      this.attack.loadedAttack.range = 0
+      this.attack.loadedAttack.damage = 0
+      this.attack.loadedAttack.bonus = 0
+      this.attack.loadedAttack.targets = 0
+      this.attack.loadedAttack.numbOfDice = 0
+      this.attack.targets.length = 0
+      this.overlay = true;
+      this.action='';
+    },
     async finalizeAttack() {
       console.log("attacked");
       if (this.attack.targets.length === 0) {

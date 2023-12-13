@@ -1,6 +1,6 @@
 <template>
   <div class="overlay" @click="handleTap($event)">
-    <div class="action-label pixel-border pixelborder">ACTION {{ 4 - combat.getActionNumber }}</div>
+    <div class="action-label pixelborder-sm pixelborder">ACTION {{ 4 - combat.getActionNumber }}</div>
     <div
       :style="{
           transform: `rotate(${rotation}deg) translate(${positions[0]}%, ${positions[1]}%)`,
