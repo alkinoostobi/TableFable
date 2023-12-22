@@ -19,11 +19,11 @@
         </div>
         <span class="action-text">Spell</span>
       </div>
-      <div class="action right pixel-border pixelborder">
+      <div class="action right pixel-border pixelborder" @click="combat.turnOver()">
         <div class="image-container">
           <img alt="Skip action icon" src="../assets/skip.png"/>
         </div>
-        <span class="action-text">Skip Action</span>
+        <span class="action-text">Skip Turn</span>
       </div>
       <div class="action left pixel-border pixelborder" @click="combat.moveStart()">
         <div class="image-container">
