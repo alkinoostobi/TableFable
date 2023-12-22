@@ -2,6 +2,7 @@ import {defineStore} from "pinia";
 import {useTokenStore} from "./tokenInfo";
 import {pxTranslate} from "./px2feet";
 import {usePositionStore} from "./positionStore"; // Adjust the path as needed
+import socket from "../boot/socket"; // Adjust the path as needed
 
 
 // Access the tokenInfo store
@@ -73,6 +74,7 @@ export const combatStore = defineStore("combat", {
       this.overlay = true;
       this.movementLeft = tokenInfo.tokens[this.initiativeOrder[this.initiativeIndex][1]][this.initiativeOrder[this.initiativeIndex][0]].speed;
       console.log(this.movementLeft = tokenInfo.tokens[this.initiativeOrder[this.initiativeIndex][1]][this.initiativeOrder[this.initiativeIndex][0]].speed)
+      socket.emit('combatInitiatives', this.initiativeOrder);
     },
     pauseCombat() {
       this.combatPause = !this.combatPause
@@ -81,6 +83,7 @@ export const combatStore = defineStore("combat", {
     turnOver() {
       // Increment initiativeIndex unless it reaches the end, then reset to 0
       this.initiativeIndex = this.initiativeIndex < this.initiativeOrder.length - 1 ? this.initiativeIndex + 1 : 0;
+      socket.emit('turnChange', this.initiativeIndex);
       this.numberOfActions = 3;
       //                  tokenInfo.tokens[tokenType][tokenId].speed
       this.movementLeft = tokenInfo.tokens[this.initiativeOrder[this.initiativeIndex][1]][this.initiativeOrder[this.initiativeIndex][0]].speed;
