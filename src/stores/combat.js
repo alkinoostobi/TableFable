@@ -119,7 +119,7 @@ export const combatStore = defineStore("combat", {
       }
     },
     moveEnd() {
-
+      console.log('moveEnd')
       this.movePosition.end = positionStore.getPosition(this.initiativeOrder[this.initiativeIndex][0])
       let distanceTraveledPX = positionStore.tokenDistance(this.movePosition.end, this.movePosition.lastStop);
       let distanceTraveledFeet = sizetranslate.pxtoFeet(distanceTraveledPX);
