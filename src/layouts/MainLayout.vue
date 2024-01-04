@@ -2,6 +2,7 @@
   <q-layout view="hHh lpR fFf" v-no-right-click>
     <character-turn v-if="combat.overlay"></character-turn>
     <roll-d20></roll-d20>
+    <pop-up></pop-up>
     <q-dialog v-model="sizenotChosen" persistent>
       <q-card style="min-width: 350px">
         <q-card-section>
@@ -90,6 +91,7 @@ import TokenNormal from "../components/TokenNormal.vue";
 import DraggableButton from "../components/DraggableButton.vue";
 import CharacterTurn from "../overlays/CharacterTurn.vue";
 import rollD20 from "../overlays/rolld20.vue"
+import PopUp from "components/popUp.vue";
 
 import {tokenPositions} from "../shared/tokenPositions"; // Adjust the import path
 import {usePositionStore} from "stores/positionStore"; // Adjust the path as needed
@@ -108,7 +110,8 @@ export default {
     TokenNormal,
     CharacterTurn,
     DraggableButton,
-    rollD20
+    rollD20,
+    PopUp
   },
   data() {
     return {

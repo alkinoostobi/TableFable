@@ -347,6 +347,8 @@ export const useTokenStore = defineStore("token", {
         },
       }
     },
+    players: ['pl1', 'pl2', 'pl3', 'pl4'],
+    enemies : ['mon1', 'mon2', 'mon3', 'mon4'],
   }),
   actions: {
     setToken(tokenId, tokenCat, tokenInfo) {
