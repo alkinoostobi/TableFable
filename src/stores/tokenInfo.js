@@ -2,10 +2,12 @@ import {defineStore} from "pinia";
 
 export const useTokenStore = defineStore("token", {
   state: () => ({
+    players: ['Dowr', 'Skar', 'Mpampaloui', 'Blor'],
+    enemies : ['mon1', 'mon2', 'mon3', 'mon4'],
     tokens: {
       pcs: {
         'pl1': {
-          'id': 'pl1',
+          'id': 'Player 1',
           'type': 0,
           'icon': 'https://s3.amazonaws.com/files.d20.io/marketplace/2349674/yebtKpMWfVOqzU379C-KQw/med.png?1648743198602',
           'size': {
@@ -65,7 +67,7 @@ export const useTokenStore = defineStore("token", {
           ]
         },
         'pl2': {
-          'id': 'pl2',
+          'id': 'Player 2',
           'type': 0,
           'icon': 'https://travisaw.com/wp-content/uploads/2021/08/token-generator-normal.png',
           'size': {
@@ -125,7 +127,7 @@ export const useTokenStore = defineStore("token", {
           ]
         },
         'pl4': {
-          'id': 'pl4',
+          'id': 'Player 4',
           'type': 0,
           'icon': 'https://i.pinimg.com/originals/ef/94/95/ef94956ffd550b1fce2ac4bd0f0c72df.png',
           'size': {
@@ -184,7 +186,7 @@ export const useTokenStore = defineStore("token", {
             {'name': 'Long spear', 'numbOfDice': 1, 'damage': 6, 'range': 10, 'bonus': 4, 'targets': 1,}
           ]
         }, 'pl3': {
-          'id': 'pl3',
+          'id': 'Player 3',
           'type': 0,
           'icon': 'https://i.pinimg.com/originals/ef/94/95/ef94956ffd550b1fce2ac4bd0f0c72df.png',
           'size': {
@@ -246,7 +248,7 @@ export const useTokenStore = defineStore("token", {
       },
       npcs: {
         'mon1': {
-          'id': 'mon1',
+          'id': 'Monster 1',
           'type': 1,
           'icon': 'https://i.pinimg.com/originals/ff/9c/48/ff9c4808809368fbd58106140977708b.png',
           'position': {},
@@ -271,7 +273,7 @@ export const useTokenStore = defineStore("token", {
           ]
         },
         'mon2': {
-          'id': 'mon2',
+          'id': 'Monster 2',
           'type': 1,
           'icon': 'https://s3.amazonaws.com/files.d20.io/marketplace/2222383/DSzCtKYufMLb9EinYYX2ug/med.png?1642080635715',
           'position': {},
@@ -296,7 +298,7 @@ export const useTokenStore = defineStore("token", {
           ]
         },
         'mon3': {
-          'id': 'mon3',
+          'id': 'Monster 3',
           'type': 1,
           'icon': 'https://i.imgur.com/amMQC3f.png',
           'position': {},
@@ -321,7 +323,7 @@ export const useTokenStore = defineStore("token", {
           ]
         },
         'mon4': {
-          'id': 'mon4',
+          'id': 'Monster 4',
           'type': 1,
           'icon': 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/04236ba8-38d0-4177-a92e-e9ece2becc59/de4sdvg-40333da7-424b-4d34-9ad8-a873cebb656c.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzA0MjM2YmE4LTM4ZDAtNDE3Ny1hOTJlLWU5ZWNlMmJlY2M1OVwvZGU0c2R2Zy00MDMzM2RhNy00MjRiLTRkMzQtOWFkOC1hODczY2ViYjY1NmMucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.3lbgVF1ID0VcRaf3ruQrbX0gB9LiIDjyW9vz6HZK7lM',
           'position': {},
@@ -347,8 +349,6 @@ export const useTokenStore = defineStore("token", {
         },
       }
     },
-    players: ['pl1', 'pl2', 'pl3', 'pl4'],
-    enemies : ['mon1', 'mon2', 'mon3', 'mon4'],
   }),
   actions: {
     setToken(tokenId, tokenCat, tokenInfo) {

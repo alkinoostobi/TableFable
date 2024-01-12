@@ -79,6 +79,8 @@ export const combatStore = defineStore("combat", {
       this.movementLeft = tokenInfo.tokens[this.initiativeOrder[this.initiativeIndex][1]][this.initiativeOrder[this.initiativeIndex][0]].speed;
       console.log(this.movementLeft = tokenInfo.tokens[this.initiativeOrder[this.initiativeIndex][1]][this.initiativeOrder[this.initiativeIndex][0]].speed)
       socket.emit('combatInitiatives', this.initiativeOrder);
+      socket.emit('tokenslist', tokenInfo.tokens);
+      socket.emit('combatStart' , true);
     },
     pauseCombat() {
       this.combatPause = !this.combatPause

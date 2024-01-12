@@ -3,6 +3,39 @@ import { useTokenStore } from "../stores/tokenInfo";
 // Access the tokenInfo store
 const artyom = new Artyom();
 const tokenInfo = useTokenStore();
+console.log('hehe')
+var commandHello = {
+  indexes:["hello","good morning","hey"], // These spoken words will trigger the execution of the command
+  action:function(){ // Action to be executed when a index match with spoken word
+      artyom.say("fagma, what the heck is fagma my brochocho , well can you fuck my ass? dabs");
+  }
+};
+artyom.addCommands(commandHello); // Add the command with addCommands method. No
+var ohcholera = {
+  indexes:["playground bear appears"], // These spoken words will trigger the execution of the command
+  action:function(){ // Action to be executed when a index match with spoken word
+      artyom.say("oh cholera, cheeto freddy fazbear, ur ur ur ur ur ur ur ur ur ur ur ur ur");
+  }
+};
+
+var ohcholera2 = {
+  indexes:["I play fighting games"], // These spoken words will trigger the execution of the command
+  action:function(){ // Action to be executed when a index match with spoken word
+      artyom.say("Kill yourself");
+  }
+};
+artyom.addCommands(ohcholera2);
+var no = {
+  indexes:["no"], // These spoken words will trigger the execution of the command
+  action:function(){ // Action to be executed when a index match with spoken word
+      artyom.say("Kill yourself");
+  }
+};
+
+
+artyom.addCommands(no);
+
+artyom.addCommands(ohcholera);
 var myGroup = [
     {
         description:"If my database contains the name of a person say something",
@@ -40,7 +73,7 @@ var myGroup = [
         }
     },
     {
-        indexes:["Browser  *","I attack hero *"],
+        indexes:["I attack enemy *","I attack hero *"],
         action:function(i,wildcard){
             console.log('here')
             if(i == 1 && wildcard.trim() <= tokenInfo.players.length){
@@ -54,4 +87,21 @@ var myGroup = [
     }
 ];
 
-artyom.addCommands(myGroup); 
+artyom.addCommands(myGroup);
+// This function activates artyom and will listen all that you say forever (requires https conection, otherwise a dialog will request if you allow the use of the microphone)
+function startContinuousArtyom(){
+  artyom.fatality();// use this to stop any of
+
+  setTimeout(function(){// if you use artyom.fatality , wait 250 ms to initialize again.
+       artyom.initialize({
+          lang:"en-GB",// A lot of languages are supported. Read the docs !
+          continuous:true,// Artyom will listen forever
+          listen:true, // Start recognizing
+          debug:true, // Show everything in the console
+          speed:1 // talk normally
+      }).then(function(){
+          console.log("Ready to work !");
+      });
+  },250);
+}
+startContinuousArtyom()
