@@ -44,6 +44,10 @@ export const combatStore = defineStore("combat", {
     }, {id: 'pl4', skill: 'Perception'}],
     groupRollResults: {pl1: -1,pl2: -1, pl3: -1, pl4: -1},
     d20appear: false,
+    popupx : 0,
+    popupy : 0,
+    popuptext : 'Default Text',
+    popupshow : false,
   }),
   actions: {
     combatStart(rollSkill) {
@@ -75,6 +79,8 @@ export const combatStore = defineStore("combat", {
       this.movementLeft = tokenInfo.tokens[this.initiativeOrder[this.initiativeIndex][1]][this.initiativeOrder[this.initiativeIndex][0]].speed;
       console.log(this.movementLeft = tokenInfo.tokens[this.initiativeOrder[this.initiativeIndex][1]][this.initiativeOrder[this.initiativeIndex][0]].speed)
       socket.emit('combatInitiatives', this.initiativeOrder);
+      socket.emit('tokenslist', tokenInfo.tokens);
+      socket.emit('combatStart' , true);
     },
     pauseCombat() {
       this.combatPause = !this.combatPause
@@ -220,11 +226,15 @@ export const combatStore = defineStore("combat", {
         let target = this.attack.targets[i];
         let category = tokenInfo.getCategoryById(target);
         let targetAC = tokenInfo.tokens[category][target].defense.ac;
+        let positionPopup = positionStore.getPosition(target);
+        console.log(positionPopup.x,positionPopup.y)
         if (attackroll >= targetAC) {
           let damage = await this.rollMyDice(this.attack.loadedAttack.numbOfDice, this.attack.loadedAttack.damage, 0, this.attack.loadedAttack.bonus);
           tokenInfo.tokens[category][target].defense.hp = tokenInfo.tokens[category][target].defense.hp - damage;
           console.log(` ${target} took ${damage} points of damage`);
+          this.showpopup(positionPopup.x,positionPopup.y,` ${target} took ${damage} points of damage`)
         } else {
+          this.showpopup(positionPopup.x,positionPopup.y,'You missed');
           console.log('You missed')
         }
       }
@@ -234,7 +244,10 @@ export const combatStore = defineStore("combat", {
       this.attack.loadedAttack.targets = 0
       this.attack.loadedAttack.numbOfDice = 0
       this.attack.targets.length = 0
-      this.actionOver();
+       //set 2 second timeout and then do action over
+       setTimeout(() => {
+        this.actionOver();
+      }, 2500);
     },
     addToGrouproll(id, skill) {
       this.groupRoll.push({'id': id, 'skill': skill})
@@ -248,6 +261,12 @@ export const combatStore = defineStore("combat", {
     },
     setd20appear() {
       this.d20appear = false;
+    },
+    showpopup(x, y, text) {
+      this.popupx = x;
+      this.popupy = y;
+      this.popuptext = text;
+      this.popupshow = true;
     }
 
   },
