@@ -68,6 +68,11 @@ export default {
       } else {
         this.hide();
       }
+    },
+    'combat.rolling': function (newVal, oldVal) {
+      if (newVal == true) {
+        this.handleClick();
+      }
     }
   },
   methods: {

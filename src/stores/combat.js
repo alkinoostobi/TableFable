@@ -48,6 +48,7 @@ export const combatStore = defineStore("combat", {
     popupy : 0,
     popuptext : 'Default Text',
     popupshow : false,
+    rolling : false,
   }),
   actions: {
     combatStart(rollSkill) {

@@ -42,5 +42,4 @@ const socket = io('http://139.91.81.103:8080');
 socket.on('connect', () => {
     console.log('Connected to server');
 });
-
 export default socket;

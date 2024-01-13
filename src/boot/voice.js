@@ -1,6 +1,5 @@
 import Artyom from "artyom.js"
 import { useTokenStore } from "../stores/tokenInfo";
-// Access the tokenInfo store
 const artyom = new Artyom();
 const tokenInfo = useTokenStore();
 console.log('hehe')
