@@ -81,6 +81,7 @@ export const combatStore = defineStore("combat", {
       socket.emit('combatInitiatives', this.initiativeOrder);
       socket.emit('tokenslist', tokenInfo.tokens);
       socket.emit('combatStart' , true);
+      socket.emit('addToLog', {type:'title', body:'Combat Started'});
     },
     pauseCombat() {
       this.combatPause = !this.combatPause
@@ -93,6 +94,7 @@ export const combatStore = defineStore("combat", {
       this.numberOfActions = 3;
       //                  tokenInfo.tokens[tokenType][tokenId].speed
       this.movementLeft = tokenInfo.tokens[this.initiativeOrder[this.initiativeIndex][1]][this.initiativeOrder[this.initiativeIndex][0]].speed;
+      socket.emit('addToLog', {type:'title', body:`${this.initiativeOrder[this.initiativeIndex][0]} Turn`});
     },
     actionOver() {
       this.action = ''
@@ -138,6 +140,7 @@ export const combatStore = defineStore("combat", {
         this.movementLeft = this.movementLeft - distanceTraveledFeet
         this.actionOver()
       }
+      socket.emit('addToLog', {type:'intendedText', body:`Action ${4-this.numberOfActions}: Move ${distanceTraveledFeet}ft`});
     },
 
     async rollMyDice(numberOfDice, die, perDieModifier = 0, finalModifier = 0) {
@@ -233,8 +236,11 @@ export const combatStore = defineStore("combat", {
           tokenInfo.tokens[category][target].defense.hp = tokenInfo.tokens[category][target].defense.hp - damage;
           console.log(` ${target} took ${damage} points of damage`);
           this.showpopup(positionPopup.x,positionPopup.y,` ${target} took ${damage} points of damage`)
+          socket.emit('addToLog', {type:'intendedText', body:`Action ${4-this.numberOfActions}: Attack ${target} (Success)`} );
+          socket.emit('addToLog', {type:'damage', body:` ${target} took ${damage} points of damage`});
         } else {
           this.showpopup(positionPopup.x,positionPopup.y,'You missed');
+          socket.emit('addToLog', {type:'intendedText', body:`Action ${4-this.numberOfActions}: Attack ${target} (Fail)`} );
           console.log('You missed')
         }
       }

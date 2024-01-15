@@ -53,7 +53,7 @@
               :height-boxes="token.size.y"
               :playing="
                 !combat.getcombatBool ||
-                (combat.initiativeOrder[combat.initiativeIndex][0] === token.id /*&& combat.action == 'moving'*/) ||
+                (combat.initiativeOrder[combat.initiativeIndex][0] === tokenInd /*&& combat.action == 'moving'*/) ||
                 combat.combatPause
               "
               :style="`
@@ -62,8 +62,8 @@
                -ms-transform: rotate(${token.rotation});
                -o-transform: rotate(${token.rotation});
                transform: rotate(${token.rotation}); `"
-              :token-index="token.id"
-              :tokenid="token.id"
+              :token-index="tokenInd"
+              :tokenid="tokenInd"
               :width-boxes="token.size.x"
             ></token-normal>
           </div>
