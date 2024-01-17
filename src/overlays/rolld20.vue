@@ -38,6 +38,7 @@
 import {combatStore} from "stores/combat";
 import {useTokenStore} from "stores/tokenInfo";
 import artyom from "src/boot/voice";
+import socket from "src/boot/socket";
 const combat = combatStore();
 const tokenInfo = useTokenStore();
 export default {
@@ -90,6 +91,9 @@ export default {
       }
     };
     artyom.addCommands(continueroll);
+    socket.on('roll', (data) => {
+      this.handleRoll();
+    })
   },
   methods: {
     randomFace() {

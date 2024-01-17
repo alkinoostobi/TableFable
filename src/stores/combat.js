@@ -275,8 +275,20 @@ export const combatStore = defineStore("combat", {
       this.popupy = y;
       this.popuptext = text;
       this.popupshow = true;
-    }
+    },
 
+
+
+
+    //CLASS ACTIONS
+
+    rage() {
+      this.numberOfActions--;
+      tokenInfo.tokens.pcs[this.initiativeOrder[this.initiativeIndex][0]].stats.hp = tokenInfo.tokens.pcs[this.initiativeOrder[this.initiativeIndex][0]].stats.hp + tokenInfo.tokens.pcs[this.initiativeOrder[this.initiativeIndex][0]].stats.con[1] + 1 ;
+      tokenInfo.tokens.pcs[this.initiativeOrder[this.initiativeIndex][0]].stats.ac = tokenInfo.tokens.pcs[this.initiativeOrder[this.initiativeIndex][0]].stats.ac - 1;
+      tokenInfo.tokens.pcs[this.initiativeOrder[this.initiativeIndex][0]].attacks[0].damage = tokenInfo.tokens.pcs[this.initiativeOrder[this.initiativeIndex][0]].attacks[0].damage + 2;
+      this.actionOver();
+    }
   },
   getters: {
     // Getter to determine whose turn it is based on initiativeIndex

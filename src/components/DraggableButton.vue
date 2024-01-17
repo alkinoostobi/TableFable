@@ -24,7 +24,7 @@
         Pause Movement
       </button>
       <button
-        class="action-button"
+        class="action-button pixel-border pixelborder"
         @click="combat.action === 'moving' ? handleEndClick() : (combat.action === 'attack' ? finalizeAttack() : '')"
         @touchstart="combat.action === 'moving' ? handleEndClick() : (combat.action == 'attack' ? finalizeAttack() : '')">
         <q-icon v-if="combat.action === 'moving'" name="stop"/>
@@ -33,7 +33,7 @@
         <span v-if="combat.action === 'attack'">Attack</span>
       </button>
       <button
-        class="action-button"
+        class="action-button pixel-border pixelborder"
         @click="combat.action === 'moving' ? handleEndClick() : (combat.action === 'attack' ? cancelAttack() : '')"
         @touchstart="combat.action === 'moving' ? handleEndClick() : (combat.action == 'attack' ? cancelAttack() : '')">
         <q-icon size="105px" name="close"/>
@@ -174,8 +174,8 @@ div {
 }
 
 .action-button {
-  margin-top: 10px;
   width : 8rem;
   height : 8rem;
+  margin : 1rem 0.5rem;
 }
 </style>

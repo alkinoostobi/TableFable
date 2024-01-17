@@ -90,22 +90,22 @@ export default {
       const screenWidth = window.innerWidth;
       const screenHeight = window.innerHeight;
 
-      if (tapY < 50) {
+      if (tapY < 350) {
         this.rotation = this.rotations[2];
         this.currentRotationIndex = 2;
         this.positions = [0, 200];
         condmtools.playerposition = 'top'
-      } else if (tapY > screenHeight - 50) {
+      } else if (tapY > screenHeight - 350) {
         this.rotation = this.rotations[0];
         this.currentRotationIndex = 0;
         this.positions = [0, 200];
         condmtools.playerposition = 'bottom'
-      } else if (tapX < 50) {
+      } else if (tapX < 350) {
         this.rotation = this.rotations[1];
         this.currentRotationIndex = 1;
         this.positions = [0, 400];
         condmtools.playerposition = 'left'
-      } else if (tapX > screenWidth - 50) {
+      } else if (tapX > screenWidth - 350) {
         this.rotation = this.rotations[3];
         this.currentRotationIndex = 3;
         this.positions = [0, 400];

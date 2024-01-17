@@ -59,7 +59,7 @@ export default {
   data() {
     return {
       isDragging: false,
-      startPosition: {x: 0, y: 0},
+      startPosition: {x: 0, y: 540},
       size: {
         x: 0,
         y: 0,
@@ -120,7 +120,7 @@ export default {
     },
   },
   created() {
-    positionStore.setPosition(this.tokenIndex, {x: 0, y: 0});
+    positionStore.setPosition(this.tokenIndex, {x: 0, y: 540});
   },
   mounted() {
     this.size.x = sizetranslate.feetTranslator(5 * this.widthBoxes);

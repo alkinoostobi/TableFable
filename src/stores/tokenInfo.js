@@ -62,7 +62,13 @@ export const useTokenStore = defineStore("token", {
                     },
                     'attacks': [
                         {'name': 'Long spear', 'numbOfDice': 1, 'damage': 6, 'range': 10, 'bonus': 4, 'targets': 1,}
-                    ]
+                    ],
+                    'spells': {
+                        'level1': [
+                            { 'name': 'Magic Missile', 'Traditions': 'Arcane, Primal','Components' : 'somatic, verbal', 'range' : 'Range 120 feet; Targets 1 creature', 'numbofactions' : 1, 'desc' : 'You conjure an arrow of acid that continues corroding the target after it hits. Make a spell attack against the target. On a hit, you deal 3d8 acid damage plus 1d6 persistent acid damage. On a critical hit, double the initial damage, but not the persistent damage.' ,'numbOfDice': 3, 'damage': 4, 'range': 120, 'bonus': 4, 'targets': 3, 'type': 'single' },
+                            { 'name' : 'Burning Hands' ,'Traditions': 'Arcane, Primal','Components' : 'somatic, verbal', 'range' : 'Range 120 feet; Targets 1 creature', 'numbofactions' : 1, 'desc' : 'You conjure an arrow of acid that continues corroding the target after it hits. Make a spell attack against the target. On a hit, you deal 3d8 acid damage plus 1d6 persistent acid damage. On a critical hit, double the initial damage, but not the persistent damage.', 'numbOfDice': 2, 'damage': 6, 'range': 15, 'bonus': 4, 'targets': 1, 'type': 'cone' },
+                        ],
+                    }
                 },
                 'pl2': {
                     'id': 'pl2',
