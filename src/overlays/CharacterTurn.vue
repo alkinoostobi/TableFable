@@ -44,7 +44,7 @@
 <script>
 import {combatStore} from "stores/combat";
 import {dmtools} from "stores/dmtools";
-
+import artyom from "../boot/voice";
 const condmtools = dmtools();
 const combat = combatStore();
 export default {
@@ -58,6 +58,29 @@ export default {
       combat: combat,
       condmtools: condmtools,
     };
+  },
+  mounted(){
+    var attack = {
+      indexes:["attack"], // These spoken words will trigger the execution of the command
+      action:function(){ // Action to be executed when a index match with spoken word
+          combat.startAttack(0);
+      }
+    };
+    artyom.addCommands(attack);
+    var move = {
+      indexes:["move"], // These spoken words will trigger the execution of the command
+      action:function(){ // Action to be executed when a index match with spoken word
+        combat.moveStart()
+      }
+    };
+    artyom.addCommands(move);
+    var turnend = {
+      indexes:["end turn", "i end my turn"], // These spoken words will trigger the execution of the command
+      action:function(){ // Action to be executed when a index match with spoken word
+        combat.turnOver()
+      }
+    };
+    artyom.addCommands(turnend);
   },
   methods: {
     handleTap(event) {

@@ -1,4 +1,5 @@
 import Artyom from "artyom.js"
+import socket from "../boot/socket"; // Adjust the path as needed
 import { useTokenStore } from "../stores/tokenInfo";
 const artyom = new Artyom();
 const tokenInfo = useTokenStore();
@@ -33,7 +34,24 @@ var no = {
 
 
 artyom.addCommands(no);
+var scrollUp = {
+  indexes:["up"], // These spoken words will trigger the execution of the command
+  action:function(){ // Action to be executed when a index match with spoken word
+      socket.emit("scrollUp")
+  }
+};
 
+
+artyom.addCommands(scrollUp);
+var scrollDown = {
+  indexes:["down"], // These spoken words will trigger the execution of the command
+  action:function(){ // Action to be executed when a index match with spoken word
+      socket.emit("scrollDown")
+  }
+};
+
+
+artyom.addCommands(scrollDown);
 artyom.addCommands(ohcholera);
 var myGroup = [
     {
@@ -104,3 +122,5 @@ function startContinuousArtyom(){
   },250);
 }
 startContinuousArtyom()
+
+export default artyom;

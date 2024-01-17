@@ -92,7 +92,7 @@ import DraggableButton from "../components/DraggableButton.vue";
 import CharacterTurn from "../overlays/CharacterTurn.vue";
 import rollD20 from "../overlays/rolld20.vue"
 import PopUp from "components/popUp.vue";
-
+import artyom from "src/boot/voice";
 import {tokenPositions} from "../shared/tokenPositions"; // Adjust the import path
 import {usePositionStore} from "stores/positionStore"; // Adjust the path as needed
 import {pxTranslate} from "stores/px2feet";
@@ -134,6 +134,72 @@ export default {
     },
   },
   mounted() {
+    var startCombat = {
+      indexes:["Start combat", 'Initiatives'], // These spoken words will trigger the execution of the command
+      action:function(){ // Action to be executed when a index match with spoken word
+        combat.combatStart('Perception')
+      }
+    };
+    artyom.addCommands(startCombat);
+    var finaliseAttack = {
+      indexes:["Finalize attack", 'Finalize'], // These spoken words will trigger the execution of the command
+      action:function(){ // Action to be executed when a index match with spoken word
+        if (combat.getAction != 'attack') {
+          return
+        }
+        combat.finalizeAttack()
+      }
+    };
+    artyom.addCommands(finaliseAttack);
+    var cancelAttack = {
+      indexes:["Cancel attack", 'Undo'], // These spoken words will trigger the execution of the command
+      action:function(){ // Action to be executed when a index match with spoken word
+        if (combat.getAction != 'attack') {
+          return
+        }
+        combat.cancelAttack()
+      }
+    };
+    artyom.addCommands(cancelAttack);
+    var attackTarget = {
+      smart:true,
+      indexes:["Attack player *","Select player *", "Deselect player *"], // These spoken words will trigger the execution of the command
+      action:function(i, wildcard){ // Action to be executed when a index match with spoken word
+        if (combat.getAction != 'attack') {
+          return
+        }
+        for (const category in tokenInfo.tokens) {
+          const creatures = tokenInfo.tokens[category];
+          for (const id in creatures) {
+            const creature = creatures[id];
+            if (creature.idName == `Player ${wildcard}`) {
+              combat.targetSelected(creature)
+            }
+          }
+        }
+      }
+    };
+    artyom.addCommands(attackTarget);
+    var attackTargetEnemy = {
+      smart:true,
+      indexes:["Attack Monster *","Select monster *", "Deselect Monster *"], // These spoken words will trigger the execution of the command
+      action:function(i, wildcard){ // Action to be executed when a index match with spoken word
+        if (combat.getAction != 'attack') {
+          return
+        }
+        for (const category in tokenInfo.tokens) {
+          const creatures = tokenInfo.tokens[category];
+          for (const id in creatures) {
+            const creature = creatures[id];
+            if (creature.idName == `Monster ${wildcard}`) {
+              console.log(creature.id)
+              combat.targetSelected(creature.id)
+            }
+          }
+        }
+      }
+    };
+    artyom.addCommands(attackTargetEnemy);
   },
   computed: {
     initiativeOrder() {

@@ -37,7 +37,7 @@
 <script>
 import {combatStore} from "stores/combat";
 import {useTokenStore} from "stores/tokenInfo";
-
+import artyom from "src/boot/voice";
 const combat = combatStore();
 const tokenInfo = useTokenStore();
 export default {
@@ -74,6 +74,22 @@ export default {
         this.handleClick();
       }
     }
+  },
+  mounted(){
+    var roll = {
+      indexes:["Roll", 'Roll my dice'], // These spoken words will trigger the execution of the command
+      action:() =>{ // Action to be executed when a index match with spoken word
+        this.handleRoll();
+      }
+    };
+    artyom.addCommands(roll);
+    var continueroll = {
+      indexes:["Continue", 'Accept roll'], // These spoken words will trigger the execution of the command
+      action:() =>{ // Action to be executed when a index match with spoken word
+        this.result();
+      }
+    };
+    artyom.addCommands(continueroll);
   },
   methods: {
     randomFace() {
