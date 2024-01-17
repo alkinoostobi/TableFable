@@ -18,7 +18,7 @@
       <q-icon class="handle-icon" name="drag_handle"/>
     </div>
     <div class="buttons-container">
-      <button v-if="combat.action === 'moving'" class="action-button" @click="handlePauseClick"
+      <button v-if="combat.action === 'moving'" class="action-button pixel-border pixelborder" @click="handlePauseClick"
               @touchstart="handlePauseClick">
         <q-icon name="pause"/>
         Pause Movement

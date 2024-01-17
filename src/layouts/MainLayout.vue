@@ -151,6 +151,29 @@ export default {
       }
     };
     artyom.addCommands(finaliseAttack);
+    var pauseMovement = {
+      indexes:["Pause movement"], // These spoken words will trigger the execution of the command
+      action:function(){ // Action to be executed when a index match with spoken word
+        console.log(combat.getAction)
+        if (combat.getAction != 'moving') {
+          return
+        }
+        console.log('pause')
+        combat.movePause()
+      }
+    }
+    artyom.addCommands(pauseMovement);
+    var endMovement = {
+      indexes:["End movement"], // These spoken words will trigger the execution of the command
+      action:function(){ // Action to be executed when a index match with spoken word
+        if (combat.getAction != 'moving') {
+          return
+        }
+        console.log('end')
+        combat.moveEnd();
+      }
+    }
+    artyom.addCommands(endMovement);
     var cancelAttack = {
       indexes:["Cancel attack", 'Undo'], // These spoken words will trigger the execution of the command
       action:function(){ // Action to be executed when a index match with spoken word

@@ -25,7 +25,8 @@
 import {usePositionStore} from "stores/positionStore"; // Adjust the path as needed
 import {pxTranslate} from "stores/px2feet";
 import {combatStore} from "stores/combat";
-
+import artyom from "src/boot/voice";
+import { parse } from "postcss";
 const positionStore = usePositionStore();
 const sizetranslate = pxTranslate();
 const combat = combatStore();
@@ -126,7 +127,94 @@ export default {
     this.size.x = sizetranslate.feetTranslator(5 * this.widthBoxes);
     this.size.y = sizetranslate.feetTranslator(5 * this.heightBoxes);
     console.log("23" + sizetranslate.feetTranslator(5 * this.heightBoxes));
+    var moves = {
+      smart: true,
+      indexes: ["Move Left * ft", "Move Right * ft", "Move Up * ft", "Move Down * ft",],
+      action: (i, wildcard) => {
+        console.log(combat.getAction);
+        if (combat.getAction != "moving") {
+          return;
+        }
+        const wordToNumber = {
+          one: 1,
+          two: 2,
+          three: 3,
+          four: 4,
+          five: 5,
+          six: 6,
+          seven: 7,
+          eight: 8,
+          nine: 9,
+          ten: 10,
+          fifteen : 15,
+          twenty : 20,
+          twentyfive : 25,
+          thirty : 30,
+          thirtyfive : 35,
+          forty : 40,
+          fortyfive : 45,
+          fifty : 50,
+          fiftyfive : 55,
+          sixty : 60,
+        };
+        let wildwildcard = wildcard.length > 2 ? wordToNumber[wildcard]: parseInt(wildcard);
+        const direction = i;
+        const position = positionStore.getPosition(this.combat.initiativeOrder[this.combat.initiativeIndex][0]);
+        const x = position.x;
+        const y = position.y;
+        console.log(`wildcard ${wildwildcard}`)
+        console.log(this.combat.initiativeOrder[this.combat.initiativeIndex][1])
+        switch (direction) {
+          case 0:
+            console.log("0");
+
+            console.log(positionStore.getPosition(this.combat.initiativeOrder[this.combat.initiativeIndex][0]));
+            positionStore.setPosition(this.combat.initiativeOrder[this.combat.initiativeIndex][0], {
+              x: x - sizetranslate.feetTranslator(parseInt(wildwildcard)),
+              y: y,
+            });
+
+            console.log(positionStore.getPosition(this.combat.initiativeOrder[this.combat.initiativeIndex][0]));
+            break;
+          case 1:
+            console.log("1");
+            console.log(positionStore.getPosition(this.combat.initiativeOrder[this.combat.initiativeIndex][0]));
+            positionStore.setPosition(this.combat.initiativeOrder[this.combat.initiativeIndex][0], {
+              x: x + sizetranslate.feetTranslator(parseInt(wildwildcard)),
+              y: y,
+            });
+            console.log(positionStore.getPosition(this.combat.initiativeOrder[this.combat.initiativeIndex][0]));
+            break;
+          case 2:
+            console.log("2");
+
+            console.log(positionStore.getPosition(this.combat.initiativeOrder[this.combat.initiativeIndex][0]));
+            positionStore.setPosition(this.combat.initiativeOrder[this.combat.initiativeIndex][0], {
+              x: x,
+              y: y - sizetranslate.feetTranslator(parseInt(wildwildcard)),
+            });
+
+            console.log(positionStore.getPosition(this.combat.initiativeOrder[this.combat.initiativeIndex][0]));
+            break;
+          case 3:
+            console.log("3");
+
+            console.log(positionStore.getPosition(this.combat.initiativeOrder[this.combat.initiativeIndex][0]));
+            positionStore.setPosition(this.combat.initiativeOrder[this.combat.initiativeIndex][0], {
+              x: x,
+              y: y + sizetranslate.feetTranslator(parseInt(wildwildcard)),
+            });
+
+            console.log(positionStore.getPosition(this.combat.initiativeOrder[this.combat.initiativeIndex][0]));
+            break;
+        }
+
+      },
+
+    };
+    artyom.addCommands(moves);
   },
+
 };
 </script>
 

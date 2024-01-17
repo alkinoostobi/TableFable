@@ -140,9 +140,9 @@ export const combatStore = defineStore("combat", {
       } else {
         this.movePosition.lastStop = this.movePosition.end;
         this.movementLeft = this.movementLeft - distanceTraveledFeet
+        socket.emit('addToLog', {type:'intendedText', body:`Action ${4-this.numberOfActions}: Move ${distanceTraveledFeet}ft`});
         this.actionOver()
       }
-      socket.emit('addToLog', {type:'intendedText', body:`Action ${4-this.numberOfActions}: Move ${distanceTraveledFeet}ft`});
     },
 
     async rollMyDice(numberOfDice, die, perDieModifier = 0, finalModifier = 0) {
