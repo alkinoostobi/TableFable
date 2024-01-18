@@ -50,8 +50,9 @@ socket.on('loadscene', (map) => {
   dmtools().setscene(map, '', '', '',)
 });
 
-socket.on('rolldie', (num) => {
+socket.on('rolldie', (id) => {
   console.log('rolling d20');
+  combatStore().addToGrouproll(id, 'Skill');
   combatStore().rollMyDice(1, 20, 0, 0)
 });
 socket.on('loadnpc', (npcID) => {

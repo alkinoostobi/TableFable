@@ -38,10 +38,7 @@ export const combatStore = defineStore("combat", {
       },
       targets: []
     },
-    groupRoll: [{id: 'pl1', skill: 'Perception'}, {id: 'pl2', skill: 'Perception'}, {
-      id: 'pl3',
-      skill: 'Perception'
-    }, {id: 'pl4', skill: 'Perception'}],
+    groupRoll: [],
     groupRollResults: {pl1: -1,pl2: -1, pl3: -1, pl4: -1},
     d20appear: false,
     popupx : 0,
@@ -153,7 +150,7 @@ export const combatStore = defineStore("combat", {
         while (Object.values(this.groupRollResults).includes(-1)) {
           await new Promise(r => setTimeout(r, 100));
         }
-
+        this.cleanGroupRoll();
         if(this.action == 'attack'){
           return (this.groupRollResults[this.initiativeOrder[this.initiativeIndex][0]] + perDieModifier + finalModifier);
         }
@@ -163,6 +160,7 @@ export const combatStore = defineStore("combat", {
           result += roll + perDieModifier;
         }
         result = result + finalModifier;
+        this.cleanGroupRoll();
         return result;
       }
 

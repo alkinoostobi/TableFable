@@ -120,6 +120,7 @@ export default {
       showOverlay: false,
       combat: combat,
       dmTools: condmtools,
+      tokenInfo : tokenInfo
     };
   },
   methods: {
@@ -133,6 +134,27 @@ export default {
       return positionStore.getPosition(ind);
     },
   },
+  watch: {
+  'tokenInfo.tokens': {
+    handler(newVal, oldVal) {
+      // Iterate over all pcs and check for changes in hp
+      for (let pcKey in oldVal.pcs) {
+        if (newVal.pcs[pcKey]) {
+          console.log(newVal.pcs[pcKey].defense.hp)
+          console.log(oldVal.pcs[pcKey].defense.hp)
+          if (newVal.pcs[pcKey].defense.hp !== oldVal.pcs[pcKey].defense.hp) {
+            console.log(`HP of ${pcKey} changed from ${oldVal.pcs[pcKey].defense.hp} to ${newVal.pcs[pcKey].defense.hp}`);
+            // You can put your logic here that should run when hp changes
+          }
+        } else {
+          console.log(`The character ${pcKey} has been removed.`);
+          // You can put your logic here that should run when a character is removed
+        }
+      }
+    },
+    deep: true // This is needed to watch nested properties
+  },
+},
   mounted() {
     var startCombat = {
       indexes:["Start combat", 'Initiatives'], // These spoken words will trigger the execution of the command
