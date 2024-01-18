@@ -36,10 +36,39 @@ export default socket;*/
 
 // socket.js
 import io from 'socket.io-client';
+import {dmtools} from "stores/dmtools";
+import {combatStore} from "stores/combat";
+import {useTokenStore} from "stores/tokenInfo";
 
 const socket = io('http://localhost:8080');
 
 socket.on('connect', () => {
-    console.log('Connected to server');
+  console.log('Connected to server');
 });
+
+socket.on('loadscene', (map) => {
+  dmtools().setscene(map, '', '', '',)
+});
+
+socket.on('rolldie', (num) => {
+  console.log('rolling d20');
+  combatStore().rollMyDice(1, 20, 0, 0)
+});
+socket.on('loadnpc', (npcID) => {
+  const char = useTokenStore().getTokenIcon(npcID, 'npcs');
+  console.log(char);
+});
+socket.on('exploremode', () => {
+  console.log('exploration time')
+  combatStore().combatBool = false;
+});
+socket.on('pausegame', () => {
+  console.log("pausing game");
+  combatStore().pauseCombat();
+});
+socket.on('combatmode', () => {
+  console.log('heaven or hell bitches');
+  combatStore().combatStart('Perception');
+});
+
 export default socket;

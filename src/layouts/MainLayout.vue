@@ -195,6 +195,7 @@ export default {
           const creatures = tokenInfo.tokens[category];
           for (const id in creatures) {
             const creature = creatures[id];
+            console.log(`wilcard ${wildcard}`)
             if (creature.idName == `Player ${wildcard}`) {
               combat.targetSelected(creature)
             }

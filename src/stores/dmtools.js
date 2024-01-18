@@ -22,6 +22,7 @@ export const dmtools = defineStore("dmtools", {
     tokenDistance(tokenA, tokenB) {
       return Math.sqrt((tokenA.x - tokenB.x) ** 2 + (tokenA.y - tokenB.y) ** 2);
     },
+
   },
   getters: {
     getGridBackground() {

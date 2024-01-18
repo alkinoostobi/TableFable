@@ -65,8 +65,8 @@ export const useTokenStore = defineStore("token", {
                     ],
                     'spells': {
                         'level1': [
-                            { 'name': 'Magic Missile', 'Traditions': 'Arcane, Primal','Components' : 'somatic, verbal', 'range' : 'Range 120 feet; Targets 1 creature', 'numbofactions' : 1, 'desc' : 'You conjure an arrow of acid that continues corroding the target after it hits. Make a spell attack against the target. On a hit, you deal 3d8 acid damage plus 1d6 persistent acid damage. On a critical hit, double the initial damage, but not the persistent damage.' ,'numbOfDice': 3, 'damage': 4, 'range': 120, 'bonus': 4, 'targets': 3, 'type': 'single' },
-                            { 'name' : 'Burning Hands' ,'Traditions': 'Arcane, Primal','Components' : 'somatic, verbal', 'range' : 'Range 120 feet; Targets 1 creature', 'numbofactions' : 1, 'desc' : 'You conjure an arrow of acid that continues corroding the target after it hits. Make a spell attack against the target. On a hit, you deal 3d8 acid damage plus 1d6 persistent acid damage. On a critical hit, double the initial damage, but not the persistent damage.', 'numbOfDice': 2, 'damage': 6, 'range': 15, 'bonus': 4, 'targets': 1, 'type': 'cone' },
+                            { 'name': 'Magic Missile', 'Traditions': 'Arcane, Primal','Components' : 'somatic, verbal',   'numbofactions' : 1, 'desc' : 'You conjure an arrow of acid that continues corroding the target after it hits. Make a spell attack against the target. On a hit, you deal 3d8 acid damage plus 1d6 persistent acid damage. On a critical hit, double the initial damage, but not the persistent damage.' ,'numbOfDice': 3, 'damage': 4, 'range': 120, 'bonus': 4, 'targets': 3, 'type': 'single' },
+                            { 'name' : 'Burning Hands' ,'Traditions': 'Arcane, Primal','Components' : 'somatic, verbal',  'numbofactions' : 1, 'desc' : 'You conjure an arrow of acid that continues corroding the target after it hits. Make a spell attack against the target. On a hit, you deal 3d8 acid damage plus 1d6 persistent acid damage. On a critical hit, double the initial damage, but not the persistent damage.', 'numbOfDice': 2, 'damage': 6, 'range': 15, 'bonus': 4, 'targets': 1, 'type': 'cone' },
                         ],
                     }
                 },
@@ -367,6 +367,9 @@ export const useTokenStore = defineStore("token", {
         },
         getToken(tokenId, tokenCat) {
             return this.tokens[tokenCat][tokenId];
+        },
+        getTokenIcon(tokenID,tokenCat){
+          return this.tokens[tokenCat][tokenID].icon;
         },
         getCategoryById(objectId) {
             const pcsKeys = Object.keys(this.tokens.pcs);
