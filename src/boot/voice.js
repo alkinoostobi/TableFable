@@ -4,36 +4,7 @@ import { useTokenStore } from "../stores/tokenInfo";
 const artyom = new Artyom();
 const tokenInfo = useTokenStore();
 console.log('hehe')
-var commandHello = {
-  indexes:["hello","good morning","hey"], // These spoken words will trigger the execution of the command
-  action:function(){ // Action to be executed when a index match with spoken word
-      artyom.say("fagma, what the heck is fagma my brochocho , well can you fuck my ass? dabs");
-  }
-};
-artyom.addCommands(commandHello); // Add the command with addCommands method. No
-var ohcholera = {
-  indexes:["playground bear appears"], // These spoken words will trigger the execution of the command
-  action:function(){ // Action to be executed when a index match with spoken word
-      artyom.say("oh cholera, cheeto freddy fazbear, ur ur ur ur ur ur ur ur ur ur ur ur ur");
-  }
-};
 
-var ohcholera2 = {
-  indexes:["I play fighting games"], // These spoken words will trigger the execution of the command
-  action:function(){ // Action to be executed when a index match with spoken word
-      artyom.say("Kill yourself");
-  }
-};
-artyom.addCommands(ohcholera2);
-var no = {
-  indexes:["no"], // These spoken words will trigger the execution of the command
-  action:function(){ // Action to be executed when a index match with spoken word
-      artyom.say("Kill yourself");
-  }
-};
-
-
-artyom.addCommands(no);
 var scrollUp = {
   indexes:["up"], // These spoken words will trigger the execution of the command
   action:function(){ // Action to be executed when a index match with spoken word
@@ -52,7 +23,6 @@ var scrollDown = {
 
 
 artyom.addCommands(scrollDown);
-artyom.addCommands(ohcholera);
 var myGroup = [
     {
         description:"If my database contains the name of a person say something",

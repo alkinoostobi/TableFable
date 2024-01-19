@@ -75,7 +75,7 @@ export default {
     };
     artyom.addCommands(move);
     var turnend = {
-      indexes:["end turn", "i end my turn"], // These spoken words will trigger the execution of the command
+      indexes:["end turn", "i end my turn", 'skip turn'], // These spoken words will trigger the execution of the command
       action:function(){ // Action to be executed when a index match with spoken word
         combat.turnOver()
       }

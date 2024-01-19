@@ -3,30 +3,10 @@
     <character-turn v-if="combat.overlay"></character-turn>
     <roll-d20></roll-d20>
     <pop-up></pop-up>
-    <q-dialog v-model="sizenotChosen" persistent>
-      <q-card style="min-width: 350px">
-        <q-card-section>
-          <div class="text-h6">Enter the size of the grid box in pixels</div>
-        </q-card-section>
 
-        <q-card-section class="q-pt-none">
-          <q-input
-            v-model="gridSize"
-            autofocus
-            dense
-            @keyup.enter="prompt = false"
-          />
-        </q-card-section>
-
-        <q-card-actions align="right" class="text-primary">
-          <q-btn v-close-popup flat label="Cancel"/>
-          <q-btn v-close-popup flat label="Enter" @click="SaveSize()"/>
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
     <div class="background-container">
       <div
-        v-if="!sizenotChosen"
+
         :style="`background-size: ${gridFeetTranslator}px ${gridFeetTranslator}px;background-image: linear-gradient(to right, ${dmTools.getGridColor} 1px, transparent 1px),
     linear-gradient(to bottom, ${dmTools.getGridColor} 1px, transparent 1px);`"
         class="grid-background"
@@ -56,6 +36,7 @@
                 (combat.initiativeOrder[combat.initiativeIndex][0] === tokenInd /*&& combat.action == 'moving'*/) ||
                 combat.combatPause
               "
+              :hp="token.defense.hp"
               :style="`
                -webkit-transform: rotate(${token.rotation});
                -moz-transform: rotate(${token.rotation});
@@ -186,7 +167,7 @@ export default {
     }
     artyom.addCommands(pauseMovement);
     var endMovement = {
-      indexes:["End movement"], // These spoken words will trigger the execution of the command
+      indexes:["End movement", 'Stop Movement'], // These spoken words will trigger the execution of the command
       action:function(){ // Action to be executed when a index match with spoken word
         if (combat.getAction != 'moving') {
           return
@@ -213,13 +194,39 @@ export default {
         if (combat.getAction != 'attack') {
           return
         }
+        const wordToNumber = {
+          one: 1,
+          two: 2,
+          three: 3,
+          four: 4,
+          five: 5,
+          six: 6,
+          seven: 7,
+          eight: 8,
+          nine: 9,
+          ten: 10,
+          fifteen : 15,
+          twenty : 20,
+          twentyfive : 25,
+          thirty : 30,
+          thirtyfive : 35,
+          forty : 40,
+          fortyfive : 45,
+          fifty : 50,
+          fiftyfive : 55,
+          sixty : 60,
+        };
+        let wildwildcard = parseInt(wildcard) ? parseInt(wildcard): wordToNumber[wildcard];
+        if(wildwildcard == undefined){
+          return;
+        }
         for (const category in tokenInfo.tokens) {
           const creatures = tokenInfo.tokens[category];
           for (const id in creatures) {
             const creature = creatures[id];
-            console.log(`wilcard ${wildcard}`)
-            if (creature.idName == `Player ${wildcard}`) {
-              combat.targetSelected(creature)
+            console.log(`wilcard ${wildwildcard}`)
+            if (creature.idName == `Player ${wildwildcard}`) {
+              combat.targetSelected(creature.id)
             }
           }
         }
@@ -233,11 +240,37 @@ export default {
         if (combat.getAction != 'attack') {
           return
         }
+        const wordToNumber = {
+          one: 1,
+          two: 2,
+          three: 3,
+          four: 4,
+          five: 5,
+          six: 6,
+          seven: 7,
+          eight: 8,
+          nine: 9,
+          ten: 10,
+          fifteen : 15,
+          twenty : 20,
+          twentyfive : 25,
+          thirty : 30,
+          thirtyfive : 35,
+          forty : 40,
+          fortyfive : 45,
+          fifty : 50,
+          fiftyfive : 55,
+          sixty : 60,
+        };
+        let wildwildcard = parseInt(wildcard) ? parseInt(wildcard): wordToNumber[wildcard];
+        if(wildwildcard == undefined){
+          return;
+        }
         for (const category in tokenInfo.tokens) {
           const creatures = tokenInfo.tokens[category];
           for (const id in creatures) {
             const creature = creatures[id];
-            if (creature.idName == `Monster ${wildcard}`) {
+            if (creature.idName == `Monster ${wildwildcard}`) {
               console.log(creature.id)
               combat.targetSelected(creature.id)
             }

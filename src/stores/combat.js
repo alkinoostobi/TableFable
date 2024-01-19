@@ -54,10 +54,11 @@ export const combatStore = defineStore("combat", {
     },
     rollForInitiative(rollSkill) {
       const tokensWithInitiative = [];
-
+      console.log(tokenInfo.tokens)
       // Calculate initiative for player characters
       for (const pcId in tokenInfo.tokens.pcs) {
         const pc = tokenInfo.tokens.pcs[pcId];
+        console.log(pc)
         const initiativeRoll = Math.floor(Math.random() * 20) + tokenInfo.tokens.pcs[pcId].skills[rollSkill][0] + tokenInfo.tokens.pcs[pcId].stats[tokenInfo.tokens.pcs[pcId].skills[rollSkill][1]][1];
         tokensWithInitiative.push({id: pcId, type: "pcs", initiative: initiativeRoll});
       }

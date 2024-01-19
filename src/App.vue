@@ -19,6 +19,8 @@ export default defineComponent({
             if (tokens[category][token].defense.hp <= 0) {
               delete tokens[category][token];
               socket.emit('deleteToken', token);
+            }else if (tokens[category][token].defense.hp > 0) {
+              socket.emit('updateToken', tokens[category][token]);
             }
           }
         }

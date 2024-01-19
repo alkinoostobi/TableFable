@@ -18,7 +18,7 @@
     @touchend="playing ? stopDragging($event) : null"
     @touchmove="playing ? touchDrag($event) : null"
     @touchstart="playing ? startTouchDragging($event) : null"
-  ><span style="color:white">{{ tokenid }}</span></div>
+  ><span style="color:white">{{ tokenid }} {{ hp }}</span></div>
 </template>
 
 <script>
@@ -56,15 +56,16 @@ export default {
       type: String,
       required: false,
     },
+    hp : {
+      type: Number,
+      required: false,
+    },
   },
   data() {
     return {
       isDragging: false,
       startPosition: {x: 0, y: 540},
-      size: {
-        x: 0,
-        y: 0,
-      },
+
       combat: combat
     };
   },
@@ -75,7 +76,23 @@ export default {
     isTargeted() {
       const targets = combat.getTargets;
       return targets.includes(this.tokenid);
+    },
+    size(){
+      return {
+        x: sizetranslate.feetTranslator(5 * this.widthBoxes),
+        y: sizetranslate.feetTranslator(5 * this.heightBoxes),
+      }
     }
+  },
+  watch: {
+    'sizetranslate.pxPerFoot': {
+      handler: function () {
+        console.log("here")
+        this.size.x = sizetranslate.feetTranslator(5 * this.widthBoxes);
+        this.size.y = sizetranslate.feetTranslator(5 * this.heightBoxes);
+      },
+      immediate: true, // To run the handler immediately on component creation
+    },
   },
   methods: {
     startDragging(event) {
@@ -123,6 +140,7 @@ export default {
   created() {
     positionStore.setPosition(this.tokenIndex, {x: 0, y: 540});
   },
+
   mounted() {
     this.size.x = sizetranslate.feetTranslator(5 * this.widthBoxes);
     this.size.y = sizetranslate.feetTranslator(5 * this.heightBoxes);
@@ -157,12 +175,15 @@ export default {
           fiftyfive : 55,
           sixty : 60,
         };
-        let wildwildcard = wildcard.length > 2 ? wordToNumber[wildcard]: parseInt(wildcard);
+        let wildwildcard = parseInt(wildcard) ? parseInt(wildcard): wordToNumber[wildcard];
         const direction = i;
         const position = positionStore.getPosition(this.combat.initiativeOrder[this.combat.initiativeIndex][0]);
         const x = position.x;
         const y = position.y;
         console.log(`wildcard ${wildwildcard}`)
+        if(wildwildcard == undefined){
+          wildwildcard = 0;
+        }
         console.log(this.combat.initiativeOrder[this.combat.initiativeIndex][1])
         switch (direction) {
           case 0:
