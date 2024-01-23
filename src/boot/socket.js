@@ -1,6 +1,6 @@
 /*import io from 'socket.io-client';
 
-const socket = io('http://localhost:8080');
+const socket = io('http://139.91.81.121:8080');
 
 // Connect to the server
 socket.on('connect', () => {
@@ -40,7 +40,7 @@ import {dmtools} from "stores/dmtools";
 import {combatStore} from "stores/combat";
 import {useTokenStore} from "stores/tokenInfo";
 import {pxTranslate} from "stores/px2feet";
-const socket = io('http://localhost:8080');
+const socket = io('http://139.91.81.121:8080');
 
 socket.on('connect', () => {
   console.log('Connected to server');

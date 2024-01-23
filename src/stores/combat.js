@@ -257,6 +257,7 @@ export const combatStore = defineStore("combat", {
       }, 2500);
     },
     addToGrouproll(id, skill) {
+      this.groupRollResults[id] = -1;
       this.groupRoll.push({'id': id, 'skill': skill})
     },
     cleanGroupRoll() {

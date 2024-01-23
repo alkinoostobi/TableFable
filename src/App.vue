@@ -10,7 +10,7 @@ export default defineComponent({
   name: 'App',
   setup() {
     const tokenStore = useTokenStore();
-    const socket = io('http://localhost:8080'); // Replace with your server URL
+    const socket = io('http://139.91.81.121:8080'); // Replace with your server URL
     watch(
       () => tokenStore.tokens,
       (tokens) => {

@@ -49,15 +49,7 @@
             ></token-normal>
           </div>
         </q-page-container>
-        <div class="circular-button">
-          <q-btn
-            color="primary"
-            icon="auto_fix_high"
-            round
-            size="lg"
-            @click="combat.combatStart('Perception')"
-          />
-        </div>
+
       </div>
       <div
         :style="`background: url(${dmTools.getGridBackground}) no-repeat center;`"
